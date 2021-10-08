@@ -8,12 +8,13 @@ int encode(const encodeStr * restrict enc)
     if(!(fs = fopen(enc->sourceFilePath, "rb")) && !ferror(fs))
     {
         perror(enc->sourceFilePath);
-        return EXIT_FAILURE;
+        return 1;
     }
     if(!(ft = fopen(enc->targetFilePath, "wb")) && !ferror(fs))
     {
+        fclose(fs);
         perror(enc->targetFilePath);
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //Шифровка/расшифровка:
@@ -29,40 +30,46 @@ int encode(const encodeStr * restrict enc)
     //Если стоит флаг удаления исходного файла
     if(enc->srcFileDelFlag)
         if(remove(enc->sourceFilePath))
-        {
-            perror("Не удается удалить файл");
-        }
+            perror(FILE_DEL_ERROR);
     return 0;
 }
 
-encodeStr * fill_struct(void)
+void fill_struct(encodeStr * restrict enc)
 {
-    encodeStr * strct = malloc(sizeof(encodeStr));
+    fputs(FIRST_FILE_INPUT_TEXT, stdout);
+    while(!s_gets(enc->sourceFilePath, PATH_LENGTH) || !*enc->sourceFilePath)
+    {
+        clear_buff();
+        fputs(FIRST_FILE_INPUT_TEXT, stdout);
+    }
+    clear_buff();
 
-    fputs("Введите путь к исходному (шифруемому) файлу: ", stdout);
-    s_gets(strct->sourceFilePath, PATH_LENGTH);
-
-    fputs("Введите путь записи зашифрованного файла: ", stdout);
-    s_gets(strct->targetFilePath, PATH_LENGTH);
+    fputs(SECOND_FILE_INPUT_TEXT, stdout);
+    while(!s_gets(enc->targetFilePath, PATH_LENGTH) || !*enc->targetFilePath)
+    {
+        clear_buff();
+        fputs(SECOND_FILE_INPUT_TEXT, stdout);
+    }
+    clear_buff();
 
     //Ввод маски
-    fputs("Введите маску шифрования: ", stdout);
-    while(!scanf("%c", &strct->mask))
+    fputs(MASK_INPUT_TEXT, stdout);
+    while(!scanf("%c", &enc->mask))
     {
         clear_buff();
         putchar('\n');
-        fputs("Введите маску шифрования: ", stdout);
+        fputs(MASK_INPUT_TEXT, stdout);
     }
     clear_buff();
 
-    fputs("Введите флаг на удаление исходного файла: ", stdout);
+    fputs(DEL_FILE_FLAG_INPUT_TEXT, stdout);
     //Ввод флага на удаление
-    while(!scanf("%d", &strct->srcFileDelFlag))
+    while(!scanf("%d", &enc->srcFileDelFlag))
     {
         clear_buff();
         putchar('\n');
-        fputs("Введите флаг на удаление исходного файла: ", stdout);
+        fputs(DEL_FILE_FLAG_INPUT_TEXT, stdout);
     }
     clear_buff();
-    return strct;
+    return;
 }

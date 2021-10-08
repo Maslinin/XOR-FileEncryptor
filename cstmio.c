@@ -2,25 +2,52 @@
 
 char* s_gets(char* str, int value)
 {
-    char* return_value;
-    return_value = fgets(str, value, stdin);
-    if(return_value) // != NULL
+    char* res;
+    res = fgets(str, value, stdin);
+    if(res) // != NULL
     {
-        char* symb = strchr(return_value, '\n');
+        del_spaces(res);
+        char* symb = strchr(res, '\n');
         if(symb)
             *symb = '\0';
         else
-        {
             clear_buff();
-            str[value - 1] = '\0';
-        }
     }
-    return return_value;
+    return res;
 }
 void clear_buff(void)
 {
-    if(!feof(stdin))
+    int pos;
+    fseek(stdin, 0, SEEK_END);
+    pos = ftell(stdin);
+    if(pos != 0)
         while(getchar() != '\n')
             continue;
+    return;
+}
+
+char* chr_isspace(char str[])
+{
+    while (*str)
+    {
+        if (isspace(*str))
+            return str;
+        ++str;
+    }
+    return NULL;
+}
+void del_spaces(char str[])
+{
+    char* ch, * temp = str;
+    while ((ch = chr_isspace(str)))
+    {
+        str = ch;
+        while (*str)
+        {
+            *str = *(str + 1);
+            ++str;
+        }
+        str = temp;
+    }
     return;
 }
