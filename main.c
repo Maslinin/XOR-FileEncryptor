@@ -10,7 +10,7 @@
 void call(encodeStr * enc);
 int main(void)
 {
-    encodeStr * enc = malloc(sizeof(encodeStr));
+    encodeStr * enc = (encodeStr *) malloc(sizeof(encodeStr));
     setlocale(LC_ALL, "Rus");
     call(enc);
     puts(END_INPUT_TEXT);
