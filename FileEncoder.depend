@@ -4,26 +4,26 @@
 	<locale.h>
 	"encoder.h"
 
-1633731684 source:c:\users\maslinin\source\repos\fileencoder\encoder.c
+1633637250 source:c:\users\maslinin\source\repos\fileencoder\encoder.c
 	"encoder.h"
 
-1633731314 c:\users\maslinin\source\repos\fileencoder\encoder.h
+1633633077 c:\users\maslinin\source\repos\fileencoder\encoder.h
 	<stdio.h>
+	<stdlib.h>
 	<errno.h>
 	"cstmio.h"
 
-1633729476 source:c:\users\maslinin\source\repos\fileencoder\cstmio.c
+1633637544 source:c:\users\maslinin\source\repos\fileencoder\cstmio.c
 	"cstmio.h"
 
-1633729406 c:\users\maslinin\source\repos\fileencoder\cstmio.h
+1633630721 c:\users\maslinin\source\repos\fileencoder\cstmio.h
 	<stdio.h>
 	<string.h>
-	<ctype.h>
 
 1633629216 c:\users\maslinin\source\repos\fileencoder\encoder.c
 	"encoder.h"
 
-1633729476 source:f:\kbt_technology\fileencoder\cstmio.c
+1634388044 source:f:\kbt_technology\fileencoder\cstmio.c
 	"cstmio.h"
 
 1633729406 f:\kbt_technology\fileencoder\cstmio.h
@@ -31,18 +31,25 @@
 	<string.h>
 	<ctype.h>
 
-1633731450 source:f:\kbt_technology\fileencoder\encoder.c
+1634561754 source:f:\kbt_technology\fileencoder\encoder.c
 	"encoder.h"
-
-1633731314 f:\kbt_technology\fileencoder\encoder.h
 	<stdio.h>
+	<stdlib.h>
 	<errno.h>
+	<string.h>
+
+1634563220 f:\kbt_technology\fileencoder\encoder.h
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	<stdbool.h>
 	"cstmio.h"
 
-1633731358 source:f:\kbt_technology\fileencoder\main.c
+1634560500 source:f:\kbt_technology\fileencoder\main.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
+	<stdbool.h>
 	"encoder.h"
 	"cstmio.h"
 

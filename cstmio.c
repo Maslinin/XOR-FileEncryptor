@@ -6,7 +6,7 @@ char* s_gets(char* str, int value)
     res = fgets(str, value, stdin);
     if(res) // != NULL
     {
-        del_spaces(res);
+        //del_spaces(res);
         char* symb = strchr(res, '\n');
         if(symb)
             *symb = '\0';
