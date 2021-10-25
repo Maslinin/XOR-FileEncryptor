@@ -20,22 +20,25 @@ int main(void)
     puts(END_INPUT_TEXT);
     while(getchar() != EXIT_SYMBOL)
     {
-        putchar('\n');
         clear_buff();
         call(enc);
         puts(END_INPUT_TEXT);
     }
-    ENCODE_INFO_FREE(enc);
+    free(enc);
     puts(END_TEXT);
+
     return 0;
 }
 void call(ENCODE_INFO * enc)
 {
     FillEncodeInfo(enc);
-    if(!Encode(enc))
-        putchar('\n');
-    else
+    putchar('\n');
+
+    //Если вызов функции успешен и мы шифровали, выводим ключ
+    if(Encode(enc) && enc->Mode)
+    {
         ShowKey(enc);
+    }
+
     return;
 }
-

@@ -1,24 +1,31 @@
 # depslib dependency file v1.0
-1633638236 source:c:\users\maslinin\source\repos\fileencoder\main.c
+1635162676 source:c:\users\maslinin\source\repos\fileencoder\main.c
 	<stdio.h>
+	<stdlib.h>
 	<locale.h>
+	<stdbool.h>
 	"encoder.h"
+	"cstmio.h"
 
-1633637250 source:c:\users\maslinin\source\repos\fileencoder\encoder.c
+1635162213 source:c:\users\maslinin\source\repos\fileencoder\encoder.c
 	"encoder.h"
+	<string.h>
+	<time.h>
 
-1633633077 c:\users\maslinin\source\repos\fileencoder\encoder.h
+1635159557 c:\users\maslinin\source\repos\fileencoder\encoder.h
 	<stdio.h>
 	<stdlib.h>
 	<errno.h>
+	<stdbool.h>
 	"cstmio.h"
 
-1633637544 source:c:\users\maslinin\source\repos\fileencoder\cstmio.c
+1635150415 source:c:\users\maslinin\source\repos\fileencoder\cstmio.c
 	"cstmio.h"
 
-1633630721 c:\users\maslinin\source\repos\fileencoder\cstmio.h
+1635149439 c:\users\maslinin\source\repos\fileencoder\cstmio.h
 	<stdio.h>
 	<string.h>
+	<ctype.h>
 
 1633629216 c:\users\maslinin\source\repos\fileencoder\encoder.c
 	"encoder.h"

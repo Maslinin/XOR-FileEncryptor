@@ -7,19 +7,19 @@
         #include "cstmio.h"
 
         #define PATH_LENGTH 255
-        #define MAX_KEY_LENGTH BUFSIZ
+        #define KEY_LENGTH BUFSIZ
         #define XOR_TO_BYTE(X, MASK) ((X) ^ (MASK))
-        #define ENCODE_INFO_FREE(X) free(X)
 
         typedef struct
         {
             char SourceFilePath[PATH_LENGTH];
             char TargetFilePath[PATH_LENGTH];
-            char Key[MAX_KEY_LENGTH];
+            char Key[KEY_LENGTH];
             int SourceFileDelFlag;
             bool Mode;
         } ENCODE_INFO;
 
+        //Интерфейс для работы с шифрованием:
         bool Encode(const ENCODE_INFO * restrict enc);
         void ShowKey(ENCODE_INFO * restrict enc);
         void FillEncodeInfo(ENCODE_INFO * restrict enc);
