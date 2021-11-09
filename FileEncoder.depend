@@ -60,3 +60,30 @@
 	"encoder.h"
 	"cstmio.h"
 
+1636466120 source:c:\users\maslinin\source\repos\xor-file-encoder-decoder\cstmio.c
+	"cstmio.h"
+
+1636466063 c:\users\maslinin\source\repos\xor-file-encoder-decoder\cstmio.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+
+1636466033 source:c:\users\maslinin\source\repos\xor-file-encoder-decoder\encoder.c
+	"encoder.h"
+	<string.h>
+	<time.h>
+
+1636465479 c:\users\maslinin\source\repos\xor-file-encoder-decoder\encoder.h
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	<stdbool.h>
+	"cstmio.h"
+
+1636465405 source:c:\users\maslinin\source\repos\xor-file-encoder-decoder\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"encoder.h"
+	"cstmio.h"
+

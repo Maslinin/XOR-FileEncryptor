@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <stdbool.h>
+
 #include "encoder.h"
 #include "cstmio.h"
 
 #define EXIT_SYMBOL 'q'
-#define END_INPUT_TEXT "Шифрование завершено. Введите \'q\', что бы закрыть программу, или другой символ, что бы продолжить."
-#define END_TEXT "Программа успешно завершила свое выполнение"
+#define END_INPUT_TEXT "Encryption completed. Type\' q\' to close the program or another character to continue."
+#define END_TEXT "The program has completed successfully"
 
 void call(ENCODE_INFO * enc);
+
 int main(void)
 {
     ENCODE_INFO * enc = (ENCODE_INFO *)malloc(sizeof(ENCODE_INFO));
-    setlocale(LC_ALL, "Rus");
 
-    //Ввод режима работы программы:
     call(enc);
     puts(END_INPUT_TEXT);
     while(getchar() != EXIT_SYMBOL)
@@ -31,14 +30,13 @@ int main(void)
 }
 void call(ENCODE_INFO * enc)
 {
+    //Enter encryption information:
     FillEncodeInfo(enc);
     putchar('\n');
 
-    //Если вызов функции успешен и мы шифровали, выводим ключ
+    //If the function call succeeds and we encrypt, we output the key:
     if(Encode(enc) && enc->Mode)
-    {
         ShowKey(enc);
-    }
 
     return;
 }

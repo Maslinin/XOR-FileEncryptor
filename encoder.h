@@ -8,7 +8,6 @@
 
         #define PATH_LENGTH 255
         #define KEY_LENGTH BUFSIZ
-        #define XOR_TO_BYTE(X, MASK) ((X) ^ (MASK))
 
         typedef struct
         {
@@ -19,7 +18,7 @@
             bool Mode;
         } ENCODE_INFO;
 
-        //Интерфейс для работы с шифрованием:
+        //Encryption Interface:
         bool Encode(const ENCODE_INFO * restrict enc);
         void ShowKey(ENCODE_INFO * restrict enc);
         void FillEncodeInfo(ENCODE_INFO * restrict enc);

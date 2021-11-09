@@ -2,29 +2,30 @@
 #include <string.h>
 #include <time.h>
 
-#define FIRST_FILE_INPUT_TEXT "Введите путь к исходному (шифруемому) файлу: "
-#define SECOND_FILE_INPUT_TEXT "Введите путь записи шифрованного (нового) файла: "
-#define KEY_MODE_INPUT_TEXT "0 - ввести свой ключ, 1 - генерировать ключ\nВвод: "
-#define MASK_INPUT_TEXT "Введите ключ(маску) шифрования: "
-#define DEL_FILE_FLAG_INPUT_TEXT "Введите флаг на удаление исходного файла(0: оставить, 1: удалить): "
-#define ENCODER_MODE_INPUT_TEXT "Введите режим работы программы(1: шифровать, 0: дешифровать): "
-#define FILE_DEL_ERROR "Не удается удалить файл"
+#define FIRST_FILE_INPUT_TEXT "Enter the path to the source (encrypted) file: "
+#define SECOND_FILE_INPUT_TEXT "Enter the write path of the encrypted (new) file: "
+#define KEY_MODE_INPUT_TEXT "0 - enter your key, 1 - generate key\nEnter: "
+#define MASK_INPUT_TEXT "Enter the encryption key (mask):"
+#define DEL_FILE_FLAG_INPUT_TEXT "Enter the flag to delete the source file (0: do not touch, 1: delete):"
+#define ENCODER_MODE_INPUT_TEXT "Enter the program mode (1: encrypt, 0: decrypt): "
+#define FILE_DEL_ERROR "Unable to delete file"
 
-//Локальная функция, получающая местонахождение файла и проверяющая его существование/существование пути
+//Local function that receives the location of the file and checks whether the file or path exists
 static char * getpath(char* out_str, char* file_mode, char * out_message);
-//Локальная функция, шифрующая указанный символ каждым символом переданного ей ключа:
+//A local function that encrypts the specified character with each character of the key passed to it:
 static char charencrypt(char ch, const char* key, bool mode);
-//Локальная функция для ввода ключа шифрования:
+//Local function to enter encryption key:
 static char * inputkey(char * restrict storage, int size, char * out_message);
-//Локальная функция, генерирующая ключ шифрования:
+//Local function generating encryption key:
 static char * generatekey(char * restrict storage, int size);
 
-//Шифрование файла(mode true - шифрование, bool - дешифрование):
+//File encryption (mode true - encryption, bool - decryption):
 bool Encode(const ENCODE_INFO * restrict enc)
 {
     FILE * fs, * ft;
     char ch;
-    //Открытие файлов в бинарном режиме:
+
+    //Open files in binary mode:
     if(!(fs = fopen(enc->SourceFilePath, "rb")) && !ferror(fs))
     {
         perror(enc->SourceFilePath);
@@ -37,7 +38,7 @@ bool Encode(const ENCODE_INFO * restrict enc)
         return false;
     }
 
-    //Шифровка/расшифровка:
+    //Encryption/decryption:
     while(!feof(fs))
     {
         fread(&ch, sizeof(ch), 1, fs);
@@ -47,24 +48,24 @@ bool Encode(const ENCODE_INFO * restrict enc)
     fclose(fs);
     fclose(ft);
 
-    //Если стоит флаг удаления исходного файла
+    //If the delete source file flag is
     if(enc->SourceFileDelFlag)
         if(remove(enc->SourceFilePath))
             perror(FILE_DEL_ERROR);
     return true;
 }
 
-//Функция для заполнения полей структуры:
+//Function for filling structure fields:
 void FillEncodeInfo(ENCODE_INFO * restrict enc)
 {
     int encodeMode, keyMode;
 
-    //Получение пути исходного файла:
+    //Retrieving source file path:
     getpath(enc->SourceFilePath, "rb", FIRST_FILE_INPUT_TEXT);
-    //Получение пути нового файла:
+    //Get new file path:
     getpath(enc->TargetFilePath, "wb", SECOND_FILE_INPUT_TEXT);
 
-    //Ввод режима работы программы:
+    //Entry of program operation mode:
     fputs(ENCODER_MODE_INPUT_TEXT, stdout);
     while(!scanf("%d", &encodeMode))
     {
@@ -96,7 +97,7 @@ void FillEncodeInfo(ENCODE_INFO * restrict enc)
         inputkey(enc->Key, KEY_LENGTH, MASK_INPUT_TEXT);
     }
 
-    //Ввод флага на удаление исходного файла:
+    //Enter flag to delete source file:
     fputs(DEL_FILE_FLAG_INPUT_TEXT, stdout);
     while(!scanf("%d", &enc->SourceFileDelFlag))
     {
@@ -109,47 +110,47 @@ void FillEncodeInfo(ENCODE_INFO * restrict enc)
     return;
 }
 
-//Функция для отображения ключа(маски) шифрования:
+//Function to display encryption key (mask):
 void ShowKey(ENCODE_INFO * restrict enc)
 {
     fputs("Ваш ключ(маска) шифрования: ", stdout);
     puts(enc->Key);
+
     return;
 }
 
-//Локальная функция для ввода пути файла:
+//Local function to enter file path:
 static char * getpath(char* out_str, char* file_mode, char * out_message)
 {
     FILE * fs = NULL;
     do
     {
         fputs(out_message, stdout);
-        //Вводим путь и убираем из строки все пробелы(del_spaces, s_gets и clearbuff кастомные функции из cstmio.h)
+        //Enter the path and remove all spaces from the line (del_spaces, s_gets and clearbuff - custom functions from cstmio.h)
         del_spaces(s_gets(out_str, PATH_LENGTH));
         clear_buff();
         if(!(fs = fopen(out_str, file_mode)))
             perror(out_str);
     }
     while(!fs);
-    //закрываем открытый файл для дальнейшего использования:
     fclose(fs);
 
-    //Если подразумевается запись в файл, удаляем открытый(созданный) файл
+    //If writing to a file is intended, delete the open (created) file
     if(strcmp(file_mode, "wb") == 0)
-        if(remove(out_str)) //если удалить не удается, выводим ошибку
+        if(remove(out_str)) //if it is not possible to delete, we display an error
             perror(FILE_DEL_ERROR);
     return out_str;
 }
 
-//true - шифрование, false - дешифрование
-//Локальная функция, шифрующая указанный символ каждым символом переданного ключа:
+//true - encode, false - decode
+//Local function encrypting the specified character with each character of the transmitted key:
 static char charencrypt(char ch, const char* key, bool mode)
 {
     int i;
-    if(mode) //если шифруем
+    if(mode) //if we encrypt
         for(i = 0; i < strlen(key); ++i)
             ch ^= key[i];
-    else //если расшифровываем
+    else //if we decrypt
         for(i = strlen(key) - 1; i >= 0; --i)
             ch ^= key[i];
 
@@ -173,10 +174,10 @@ static char * inputkey(char * restrict storage, int size, char * out_message)
 static char * generatekey(char * restrict storage, int size)
 {
     int i;
-    //Задаем зерно генератора случайных чисел, что бы каждый раз при запуске был разный ключ
+    //Set the grain of the random number generator so that each time the start is different key
     srand(time(NULL));
     for(i = 0; i < size; ++i)
-        storage[i] = rand()%95 + 33; //диапазон символов в ASCII
+        storage[i] = rand()%95 + 33; //character range in ASCII
     del_spaces(storage);
     storage[i - 1] = '\0';
 

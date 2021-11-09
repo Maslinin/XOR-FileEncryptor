@@ -1,6 +1,6 @@
 #include "cstmio.h"
 
-//Локальная функция, находящая пробельный символ в строке.
+//Local function that finds the space character in the string.
 static char* chr_isspace(char str[]);
 
 char* s_gets(char* str, int value)
@@ -15,18 +15,20 @@ char* s_gets(char* str, int value)
         else
             clear_buff();
     }
+
     return res;
 }
 void clear_buff(void)
 {
     int pos;
-    //выяснение длины потока:
     fseek(stdin, 0, SEEK_END);
     pos = ftell(stdin);
-    //Если поток не пустой
+
+    //If there are symbols in the stream
     if(pos != 0)
         while(getchar() != '\n')
             continue;
+
     return;
 }
 void del_spaces(char str[])
@@ -42,17 +44,19 @@ void del_spaces(char str[])
         }
         str = temp;
     }
+
     return;
 }
 
 static char* chr_isspace(char str[])
 {
-    //пока в строке ненулевой символ
+    //while in the string non-zero character
     while (*str)
     {
         if (isspace(*str))
             return str;
         ++str;
     }
+
     return NULL;
 }

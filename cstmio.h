@@ -4,11 +4,10 @@
         #include <string.h>
         #include <ctype.h>
 
-        //Интерфейс заголовочного файла
-        //Функция ввода строки. Заменяет символ новой строки нулевым символом.
+        //Line entry function. Replaces the new line character with a null character.
         char* s_gets(char* str, int value);
-        //Функция очистки буфера ввода stdin
+        //stdin input buffer cleaning function
         void clear_buff(void);
-        //удаляет все пробельные символы из строки
+        //removes all space characters from the string
         void del_spaces(char str[]);
 #endif // _CSTMIO_H
