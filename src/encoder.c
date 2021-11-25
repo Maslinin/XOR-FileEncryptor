@@ -113,7 +113,7 @@ void FillEncodeInfo(ENCODE_INFO * restrict enc)
 //Function to display encryption key (mask):
 void ShowKey(ENCODE_INFO * restrict enc)
 {
-    fputs("Ваш ключ(маска) шифрования: ", stdout);
+    fputs("Your encryption key (mask):", stdout);
     puts(enc->Key);
 
     return;
