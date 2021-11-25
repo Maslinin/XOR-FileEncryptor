@@ -7,6 +7,9 @@
 *.obj
 *.elf
 
+# Build directory
+/bin
+
 # Linker output
 *.ilk
 *.map
