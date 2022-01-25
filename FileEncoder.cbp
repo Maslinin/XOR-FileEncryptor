@@ -31,16 +31,20 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/cstmio.c">
-			<Option compilerVar="cc" />
+		<Unit filename="src/Custom/cstmio.c">
+			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/cstmio.h" />
-		<Unit filename="src/encoder.c">
-			<Option compilerVar="cc" />
+		<Unit filename="src/Custom/cstmio.h" />
+		<Unit filename="src/Custom/cstmstr.c">
+			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/encoder.h" />
+		<Unit filename="src/Custom/cstmstr.h" />
+		<Unit filename="src/Encoder/xorencoder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/Encoder/xorencoder.h" />
 		<Unit filename="src/main.c">
-			<Option compilerVar="cc" />
+			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
