@@ -22,6 +22,11 @@ char *del_spaces(char *str)
 {
     char *ch, *temp = str;
 
+    if(!str)
+    {
+        return NULL;
+    }
+
     while ((ch = get_first_space(str)))
     {
         str = ch;

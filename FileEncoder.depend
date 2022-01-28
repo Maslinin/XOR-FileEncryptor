@@ -107,12 +107,13 @@
 	<stdbool.h>
 	"cstmio.h"
 
-1643069736 source:c:\users\maslinin\source\repos\xor-file-encoder\src\main.c
+1643406044 source:c:\users\maslinin\source\repos\xor-file-encoder\src\main.c
 	<stdio.h>
-	<stdlib.h>
 	<string.h>
+	<limits.h>
 	"Encoder/xorencoder.h"
 	"Custom/cstmio.h"
+	"Custom/cstmstr.h"
 
 1637881166 source:c:\users\maslinin\source\repos\xor-file-encoder\src\cstmio\cstmio.c
 	"cstmio.h"
@@ -140,21 +141,21 @@
 
 1642366027 c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmio.h
 
-1643068986 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.c
+1643148097 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.c
 	"cstmstr.h"
 	<ctype.h>
 	<stddef.h>
 
 1642366044 c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.h
 
-1643069420 source:c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\xorencoder.c
+1643392953 source:c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\xorencoder.c
 	"xorencoder.h"
+	"../Custom/cstmio.h"
+	"../Custom/cstmstr.h"
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<string.h>
 
-1643069438 c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\xorencoder.h
-	"../Custom/cstmio.h"
-	"../Custom/cstmstr.h"
+1643146461 c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\xorencoder.h
 
