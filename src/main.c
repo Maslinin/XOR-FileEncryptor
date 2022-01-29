@@ -7,15 +7,16 @@
 #include "Custom/cstmstr.h"
 
 #define EXIT_SYMBOL 'q'
+#define DOWN putchar('\n')
 #define KEY_LENGTH BUFSIZ
 #define PATH_LENGTH PATH_MAX
 
 #define INPUT_SOURCE_FILE_MESSAGE "Input the path to the source file:"
 #define INPUT_TARGET_FILE_MESSAGE "Input the path to save the encrypted file:"
-#define INPUT_KEY_MODE_MESSAGE "Input the key mode (0 to generate key, 1 to input your key):"
-#define INPUT_ENCODER_MODE_MESSAGE "Input the program mode (1 to encrypt, 0 to decrypt):"
+#define INPUT_KEY_MODE_MESSAGE "Input the key mode (0 to input your key, 1 to generate key): "
 #define INPUT_MASK_MESSAGE "Input the encryption key (mask):"
-#define INPUT_DEL_FILE_FLAG_MESSAGE "Input the flag to delete the source file (0 to do not touch, 1 to delete):"
+#define INPUT_ENCODER_MODE_MESSAGE "Input the program mode (1 to encrypt, 0 to decrypt): "
+#define INPUT_DEL_FILE_FLAG_MESSAGE "Input the flag to delete the source file (0 to do not touch, 1 to delete): "
 
 //Function that receives the location of the file and checks whether the file or path exists
 char *get_path(char *for_path, int path_length, const char *file_mode);
@@ -24,8 +25,9 @@ char *input_key(char *storage, int size);
 
 int main(void)
 {
+    char exitCh;
     char s_path[PATH_LENGTH], t_path[PATH_LENGTH], key[KEY_LENGTH];
-    int encMode = 0, keyMode = 0, srcFileDelFlag;
+    int encMode = 0, keyMode = 0, srcFileDelFlag = 0;
 
     do
     {
@@ -33,44 +35,17 @@ int main(void)
         while(!(get_path(s_path, PATH_LENGTH, "rb")))
         {
             perror(NULL);
-            putchar('\n');
+            DOWN;
             puts(INPUT_SOURCE_FILE_MESSAGE);
         }
-        putchar('\n');
         clean_stdin_buff();
 
         puts(INPUT_TARGET_FILE_MESSAGE);
         while(!(get_path(t_path, PATH_LENGTH, "wb")))
         {
             perror(NULL);
-            putchar('\n');
+            DOWN;
             puts(INPUT_TARGET_FILE_MESSAGE);
-        }
-        putchar('\n');
-        clean_stdin_buff();
-
-        fputs(INPUT_KEY_MODE_MESSAGE, stdout);
-        while(!scanf("%d", &keyMode))
-        {
-            clean_stdin_buff();
-            putchar('\n');
-            fputs(INPUT_KEY_MODE_MESSAGE, stdout);
-        }
-        clean_stdin_buff();
-        if(keyMode)
-        {
-            puts(INPUT_MASK_MESSAGE);
-            while(!input_key(key, KEY_LENGTH))
-            {
-                clean_stdin_buff();
-                perror(NULL);
-                putchar('\n');
-                puts(INPUT_MASK_MESSAGE);
-            }
-        }
-        else
-        {
-            generate_key(key, KEY_LENGTH);
         }
         clean_stdin_buff();
 
@@ -78,39 +53,78 @@ int main(void)
         while(!scanf("%d", &encMode))
         {
             clean_stdin_buff();
-            putchar('\n');
+            DOWN;
             fputs(INPUT_ENCODER_MODE_MESSAGE, stdout);
         }
-        putchar('\n');
+        clean_stdin_buff();
+
+        if(encMode)
+        {
+            fputs(INPUT_KEY_MODE_MESSAGE, stdout);
+            while(!scanf("%d", &keyMode))
+            {
+                clean_stdin_buff();
+                DOWN;
+                fputs(INPUT_KEY_MODE_MESSAGE, stdout);
+            }
+            clean_stdin_buff();
+        }
+
+        if(encMode && keyMode)
+        {
+            generate_key(key, KEY_LENGTH);
+        }
+        else
+        {
+            puts(INPUT_MASK_MESSAGE);
+            while(!input_key(key, KEY_LENGTH))
+            {
+                perror(NULL);
+                clean_stdin_buff();
+                DOWN;
+                puts(INPUT_MASK_MESSAGE);
+            }
+        }
         clean_stdin_buff();
 
         fputs(INPUT_DEL_FILE_FLAG_MESSAGE, stdout);
         while(!scanf("%d", &srcFileDelFlag))
         {
             clean_stdin_buff();
-            putchar('\n');
+            DOWN;
             fputs(INPUT_DEL_FILE_FLAG_MESSAGE, stdout);
         }
-        putchar('\n');
         clean_stdin_buff();
+        DOWN;
 
-        puts("Encrypting file...");
+        encMode ? puts("Encrypting file...") : puts("Decrypting file...");
         if(file_encode(s_path, t_path, key, encMode, srcFileDelFlag))
         {
-            perror("Encode is fail. Please, try again");
-            putchar('\n');
+            encMode ? perror("Encode is fail. Please, try again") : perror("Decode is fail. Please, try again");
+            DOWN;
         }
         else
         {
-            puts("Your key:");
-            puts(key);
-            putchar('\n');
+            if(encMode)
+            {
+                puts("The file was successfully encrypted. Your key:");
+                puts(key);
+            }
+            else
+            {
+                puts("The file was successfully decrypted.");
+            }
+            DOWN;
         }
 
-        printf("Input \'%c\' to exit or any other key if you want to continue", EXIT_SYMBOL);
+        printf("Input \'%c\' to exit or any other key if you want to continue\n", EXIT_SYMBOL);
+        fputs("Input a symbol: ", stdout);
+        exitCh = getchar();
+
         clean_stdin_buff();
+        DOWN;
     }
-    while(getchar() != EXIT_SYMBOL);
+    while(exitCh != EXIT_SYMBOL);
 
     return 0;
 }
@@ -119,8 +133,8 @@ char *get_path(char* for_path, int path_length, const char* file_mode)
 {
     FILE *fs = NULL;
 
-    //Enter the path and remove all spaces from the line (del_spaces, s_gets and clearbuff - custom functions from cstmio.h)
-    if(del_spaces(s_gets(for_path, path_length)))
+    //Enter the path and remove all spaces from the line (del_spaces, s_gets and clean_stdin_buff() - custom functions from cstmio.h)
+    if(!del_spaces(s_gets(for_path, path_length)))
     {
         return NULL;
     }
@@ -129,7 +143,10 @@ char *get_path(char* for_path, int path_length, const char* file_mode)
     {
         return NULL;
     }
-    fclose(fs);
+    if(fclose(fs) == EOF)
+    {
+        return NULL;
+    }
 
     //If writing to a file is intended, delete the open (created) file
     if(strcmp(file_mode, "wb") == 0)

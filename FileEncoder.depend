@@ -107,7 +107,7 @@
 	<stdbool.h>
 	"cstmio.h"
 
-1643406044 source:c:\users\maslinin\source\repos\xor-file-encoder\src\main.c
+1643478237 source:c:\users\maslinin\source\repos\xor-file-encoder\src\main.c
 	<stdio.h>
 	<string.h>
 	<limits.h>
@@ -135,13 +135,14 @@
 	<stdbool.h>
 	"../CSTMIO/cstmio.h"
 
-1642366032 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmio.c
+1643410608 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmio.c
 	"cstmio.h"
 	<stdio.h>
+	<string.h>
 
 1642366027 c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmio.h
 
-1643148097 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.c
+1643410915 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.c
 	"cstmstr.h"
 	<ctype.h>
 	<stddef.h>

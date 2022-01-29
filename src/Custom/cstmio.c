@@ -1,6 +1,7 @@
 #include "cstmio.h"
 
 #include <stdio.h>
+#include <string.h>
 
 void clean_stdin_buff(void)
 {
@@ -9,7 +10,7 @@ void clean_stdin_buff(void)
     pos = ftell(stdin);
 
     //If there are symbols in the stream
-    if(!pos)
+    if(pos)
     {
         while(getchar() != '\n')
         {
@@ -25,11 +26,11 @@ char *s_gets(char *str, int len)
 
     if(res) // != NULL
     {
-        *symb = strchr(res, '\n');
+        symb = strchr(res, '\n');
         if(symb)
             *symb = '\0';
         else
-            clear_stdin_buff();
+            clean_stdin_buff();
     }
 
     return res;

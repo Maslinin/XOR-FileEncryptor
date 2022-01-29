@@ -10,7 +10,7 @@ char *get_first_space(const char *str)
     {
         if (isspace(*str))
         {
-            return str;
+            return (char*) str;
         }
         ++str;
     }
