@@ -87,3 +87,76 @@
 	"encoder.h"
 	"cstmio.h"
 
+1641511964 source:c:\users\maslinin\source\repos\xor-file-encoder\src\cstmio.c
+	"cstmio.h"
+
+1641511964 c:\users\maslinin\source\repos\xor-file-encoder\src\cstmio.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+
+1641511964 source:c:\users\maslinin\source\repos\xor-file-encoder\src\encoder.c
+	"encoder.h"
+	<string.h>
+	<time.h>
+
+1641511964 c:\users\maslinin\source\repos\xor-file-encoder\src\encoder.h
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	<stdbool.h>
+	"cstmio.h"
+
+1643478237 source:c:\users\maslinin\source\repos\xor-file-encoder\src\main.c
+	<stdio.h>
+	<string.h>
+	<limits.h>
+	"Encoder/xorencoder.h"
+	"Custom/cstmio.h"
+	"Custom/cstmstr.h"
+
+1637881166 source:c:\users\maslinin\source\repos\xor-file-encoder\src\cstmio\cstmio.c
+	"cstmio.h"
+
+1641503211 c:\users\maslinin\source\repos\xor-file-encoder\src\cstmio\cstmio.h
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+
+1641504006 source:c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\encoder.c
+	"encoder.h"
+	<string.h>
+	<time.h>
+
+1641504014 c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\encoder.h
+	<stdio.h>
+	<stdlib.h>
+	<errno.h>
+	<stdbool.h>
+	"../CSTMIO/cstmio.h"
+
+1643410608 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmio.c
+	"cstmio.h"
+	<stdio.h>
+	<string.h>
+
+1642366027 c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmio.h
+
+1643410915 source:c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.c
+	"cstmstr.h"
+	<ctype.h>
+	<stddef.h>
+
+1642366044 c:\users\maslinin\source\repos\xor-file-encoder\src\custom\cstmstr.h
+
+1643392953 source:c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\xorencoder.c
+	"xorencoder.h"
+	"../Custom/cstmio.h"
+	"../Custom/cstmstr.h"
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+
+1643146461 c:\users\maslinin\source\repos\xor-file-encoder\src\encoder\xorencoder.h
+
