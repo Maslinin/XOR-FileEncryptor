@@ -9,7 +9,7 @@
 #include <string.h>
 
 //A local function that encrypts the specified character with each character of the key passed to it:
-static char charencrypt(char ch, const char* key, int mode);
+static char char_encrypt(char ch, const char* key, int mode);
 
 //File encryption (mode 1 - encryption, 0 - decryption):
 int file_encode(const char *srcFilePath, const char *trgtFilePath, const char *key, int encryptMode, int srcFileDelFlag)
@@ -32,7 +32,7 @@ int file_encode(const char *srcFilePath, const char *trgtFilePath, const char *k
     while(!feof(fs))
     {
         fread(&ch, sizeof(ch), 1, fs);
-        ch = charencrypt(ch, key, encryptMode);
+        ch = char_encrypt(ch, key, encryptMode);
         fwrite(&ch, sizeof(ch), 1, ft);
     }
     fclose(fs);
@@ -65,7 +65,7 @@ char *generate_key(char *str, int size)
     return str;
 }
 
-static char charencrypt(char ch, const char* key, int mode)
+static char char_encrypt(char ch, const char* key, int mode)
 {
     int i;
 
