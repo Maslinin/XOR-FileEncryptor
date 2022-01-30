@@ -9,6 +9,7 @@
 
 # Build directory
 /bin
+/build
 
 # Linker output
 *.ilk
