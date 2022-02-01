@@ -9,7 +9,12 @@
 #define EXIT_SYMBOL 'q'
 #define DOWN putchar('\n')
 #define KEY_LENGTH BUFSIZ
+
+#ifdef PATH_MAX
 #define PATH_LENGTH PATH_MAX
+#else
+#define PATH_LENGTH 255
+#endif
 
 #define INPUT_SOURCE_FILE_MESSAGE "Input the path to the source file:"
 #define INPUT_TARGET_FILE_MESSAGE "Input the path to save the encrypted file:"
