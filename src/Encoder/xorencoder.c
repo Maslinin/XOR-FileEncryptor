@@ -15,7 +15,7 @@ static char char_encrypt(char ch, const char* key, int mode);
 int file_encode(const char *srcFilePath, const char *trgtFilePath, const char *key, int encryptMode, int srcFileDelFlag)
 {
     FILE *fs, *ft;
-    char ch;
+    char ch = '\0';
 
     //Open files in binary mode:
     if(!(fs = fopen(srcFilePath, "rb")))
@@ -39,12 +39,9 @@ int file_encode(const char *srcFilePath, const char *trgtFilePath, const char *k
     fclose(ft);
 
     //If the delete source file flag is
-    if(srcFileDelFlag)
+    if(srcFileDelFlag && remove(srcFilePath))
     {
-        if(remove(srcFilePath))
-        {
-            return EXIT_FAILURE;
-        }
+        return EXIT_FAILURE;
     }
 
     return 0;
@@ -57,10 +54,12 @@ char *generate_key(char *str, int size)
     srand(time(NULL));
 
     for(i = 0; i < size; ++i)
+    {
         str[i] = rand()%95 + 33; //character range in ASCII
+    }
 
     del_spaces(str);
-    str[i - 1] = '\0';
+    str[size - 1] = '\0';
 
     return str;
 }

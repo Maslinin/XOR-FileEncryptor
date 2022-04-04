@@ -31,7 +31,8 @@ char *input_key(char *storage, int size);
 int main(void)
 {
     char exitCh;
-    char s_path[PATH_LENGTH], t_path[PATH_LENGTH], key[KEY_LENGTH];
+    char s_path[PATH_LENGTH], t_path[PATH_LENGTH];
+    char key[KEY_LENGTH];
     int encMode = 0, keyMode = 0, srcFileDelFlag = 0;
 
     do
