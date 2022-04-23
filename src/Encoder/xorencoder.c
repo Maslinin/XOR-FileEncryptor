@@ -51,7 +51,7 @@ char *generate_key(char *str, int size)
 {
     int i;
     //Set the grain of the random number generator so that each time the start is different key
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 
     for(i = 0; i < size; ++i)
     {

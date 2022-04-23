@@ -30,7 +30,7 @@ char *input_key(char *storage, int size);
 
 int main(void)
 {
-    char exitCh;
+    int exitCh;
     char s_path[PATH_LENGTH], t_path[PATH_LENGTH];
     char key[KEY_LENGTH];
     int encMode = 0, keyMode = 0, srcFileDelFlag = 0;
@@ -155,12 +155,9 @@ char *get_path(char* for_path, int path_length, const char* file_mode)
     }
 
     //If writing to a file is intended, delete the open (created) file
-    if(strcmp(file_mode, "wb") == 0)
+    if(!strcmp(file_mode, "wb") && remove(for_path))
     {
-        if(remove(for_path)) //if it is not possible to delete, we display an error
-        {
-            return NULL;
-        }
+        return NULL;
     }
 
     return for_path;
@@ -168,7 +165,7 @@ char *get_path(char* for_path, int path_length, const char* file_mode)
 
 char *input_key(char *for_key, int size)
 {
-    if(s_gets(for_key, KEY_LENGTH) == NULL)
+    if(s_gets(for_key, size) == NULL)
     {
         return NULL;
     }
