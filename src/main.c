@@ -2,9 +2,9 @@
 #include <string.h>
 #include <limits.h>
 
-#include "Encoder/xorencoder.h"
-#include "Custom/cstmio.h"
-#include "Custom/cstmstr.h"
+#include "Encoders/xorencoder.h"
+#include "Customs/cstmio.h"
+#include "Customs/cstmstr.h"
 
 #define EXIT_SYMBOL 'q'
 #define DOWN putchar('\n')
