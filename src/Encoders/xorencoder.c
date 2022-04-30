@@ -66,15 +66,15 @@ char *generate_key(char *str, int size)
 
 static char char_encrypt(char ch, const char* key, int mode)
 {
-    size_t i;
+    int i;
 
     if(mode) //if we encrypt
-        for(i = 0; i < strlen(key); ++i)
+        for(i = 0; i < (int)(strlen(key)); ++i)
         {
             ch ^= key[i];
         }
     else //if we decrypt
-        for(i = strlen(key) - 1; i >= 0; --i)
+        for(i = (int)(strlen(key) - 1); i >= 0; --i)
         {
             ch ^= key[i];
         }
