@@ -16,17 +16,17 @@ static char decrypt_byte(char ch, const char* key);
 
 inline int encrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key)
 {
-    return (encrypt_or_decrypt_file(srcFilePath, trgFilePath, key, 1) == EXIT_FAILURE) ? EXIT_FAILURE : EXIT_SUCCESS;
+    return (encrypt_or_decrypt_file(srcFilePath, trgFilePath, key, 1) == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 inline int decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key)
 {
-    return (encrypt_or_decrypt_file(srcFilePath, trgFilePath, key, 0) == EXIT_FAILURE) ? EXIT_FAILURE : EXIT_SUCCESS;
+    return (encrypt_or_decrypt_file(srcFilePath, trgFilePath, key, 0) == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode)
 {
-    FILE* fs, *ft;
+    FILE* fs = NULL, *ft = NULL;
     char ch = '\0';
 
     if (open_source_and_target_files(srcFilePath, trgFilePath, fs, ft) == EXIT_FAILURE)
@@ -68,7 +68,7 @@ static int open_source_and_target_files(const char* srcFilePath, const char* trg
 
 static inline int close_source_and_target_files(FILE* fs, FILE* ft)
 {
-    return (fclose(fs) != EOF || fclose(ft) != EOF) ? EXIT_FAILURE : EXIT_SUCCESS;
+    return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 static char encrypt_byte(char ch, const char* key)
