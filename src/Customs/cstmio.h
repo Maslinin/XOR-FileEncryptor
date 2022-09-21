@@ -6,6 +6,7 @@
 char* s_gets(char* str, int len);
 void clear_stdin_buff(void);
 void clear_buff(FILE* stream);
+char* get_path(char* forPath, int keyLength, const char* file_mode);
 int file_exists_check(const char* filePath);
 int check_file_path_availability(const char* filePath);
 

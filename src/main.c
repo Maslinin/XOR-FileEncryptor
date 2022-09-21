@@ -10,8 +10,6 @@
 #define DOWN putchar('\n')
 #define CLEAR_STDIN clear_stdin_buff()
 
-char* get_path(char* forPath, int keyLength, const char* file_mode);
-int check_path(const char* path, const char* fileMode);
 char* input_key(char* storage, int size);
 
 int main(void)
@@ -123,35 +121,6 @@ int main(void)
     while(exitCh != EXIT_SYMBOL);
 
     return 0;
-}
-
-char* get_path(char* forPath, int keyLength, const char* fileMode)
-{
-    FILE* fs = NULL;
-
-    s_gets(forPath, keyLength);
-    remove_spaces(forPath);
-
-    if(check_path(forPath, fileMode) == EXIT_FAILURE)
-    {
-        return NULL;
-    }
-
-    return forPath;
-}
-
-int check_path(const char* path, const char* fileMode)
-{
-    if (strcmp(fileMode, "rb") == 0 && file_exists_check(path))
-    {
-        return EXIT_FAILURE;
-    }
-    if(strcmp(fileMode, "wb") == 0 && check_file_path_availability(path))
-    {
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
 }
 
 char* input_key(char* forKey, int size)

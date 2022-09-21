@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+static int check_path(const char* path, const char* fileMode);
+
 char* s_gets(char* str, int len)
 {
     char* res, *symb;
@@ -33,7 +35,6 @@ void clear_buff(FILE* stream)
     fseek(stream, 0, SEEK_END);
     pos = ftell(stream);
 
-    //If there are symbols in the stream
     if (pos)
     {
         ch = getchar();
@@ -42,6 +43,35 @@ void clear_buff(FILE* stream)
             ch = getchar();
         }
     }
+}
+
+char* get_path(char* forPath, int keyLength, const char* fileMode)
+{
+    FILE* fs = NULL;
+
+    s_gets(forPath, keyLength);
+    remove_spaces(forPath);
+
+    if (check_path(forPath, fileMode) == EXIT_FAILURE)
+    {
+        return NULL;
+    }
+
+    return forPath;
+}
+
+static int check_path(const char* path, const char* fileMode)
+{
+    if (strcmp(fileMode, "rb") == 0 && file_exists_check(path) == EXIT_FAILURE)
+    {
+        return EXIT_FAILURE;
+    }
+    if (strcmp(fileMode, "wb") == 0 && check_file_path_availability(path) == EXIT_FAILURE)
+    {
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
 
 int file_exists_check(const char* filePath)
