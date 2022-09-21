@@ -12,7 +12,6 @@
 
 char* get_path(char* forPath, int keyLength, const char* file_mode);
 int check_path(const char* path, const char* fileMode);
-int get_int();
 char* input_key(char* storage, int size);
 
 int main(void)
@@ -153,18 +152,6 @@ int check_path(const char* path, const char* fileMode)
     }
 
     return EXIT_SUCCESS;
-}
-
-int get_int()
-{
-    int arrSize = 10;
-    char str[arrSize];
-
-    s_gets(str, arrSize);
-    if(str == NULL)
-    {
-        return 0;
-    }
 }
 
 char* input_key(char* forKey, int size)
