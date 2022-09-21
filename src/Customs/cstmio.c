@@ -28,8 +28,7 @@ void clear_stdin_buff(void)
 
 void clear_buff(FILE* stream)
 {
-    int pos;
-    char ch;
+    int pos, ch;
 
     fseek(stream, 0, SEEK_END);
     pos = ftell(stream);
@@ -40,7 +39,6 @@ void clear_buff(FILE* stream)
         ch = getchar();
         while (ch != '\n' || ch != EOF)
         {
-            continue;
             ch = getchar();
         }
     }

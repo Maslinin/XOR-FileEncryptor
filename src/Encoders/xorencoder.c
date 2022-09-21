@@ -73,7 +73,8 @@ static inline int close_source_and_target_files(FILE* fs, FILE* ft)
 
 static char encrypt_byte(char ch, const char* key)
 {
-    int i, keyLength = ((int)strlen(key));
+    int i;
+    int keyLength = ((int)strlen(key));
 
     for (i = 0; i < keyLength; ++i)
     {
@@ -85,7 +86,8 @@ static char encrypt_byte(char ch, const char* key)
 
 static char decrypt_byte(char ch, const char* key)
 {
-    int i, keyLength = ((int)(strlen(key) - 1));
+    int i;
+    int keyLength = ((int)(strlen(key) - 1));
 
     for (i = keyLength; i >= 0; --i)
     {
