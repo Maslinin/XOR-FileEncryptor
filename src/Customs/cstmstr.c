@@ -1,33 +1,14 @@
 #include "cstmstr.h"
 
 #include <ctype.h>
+#include <string.h>
 #include <stddef.h>
 
-char *get_first_space(const char *str)
+void remove_spaces(char* str)
 {
-    //while in the string non-zero character
-    while (*str)
-    {
-        if (isspace(*str))
-        {
-            return (char*) str;
-        }
-        ++str;
-    }
+    char* ch,* temp = str;
 
-    return NULL;
-}
-
-char *del_spaces(char *str)
-{
-    char *ch, *temp = str;
-
-    if(!str)
-    {
-        return NULL;
-    }
-
-    while ((ch = get_first_space(str)))
+    while ((ch = strchr(str, ' ')))
     {
         str = ch;
         while (*str)
@@ -37,6 +18,4 @@ char *del_spaces(char *str)
         }
         str = temp;
     }
-
-    return str;
 }

@@ -1,8 +1,10 @@
-#ifndef _ENCODER_H
-#define _ENCODER_H
+#ifndef _XORENCODER_H
+#define _XORENCODER_H
 
-//Encryption Interface:
-int file_encode(const char *srcFilePath, const char *trgtFilePath, const char *key, int encryptMode, int srcFileDelFlag);
-char *generate_key(char *str, int size);
+#define KEY_LENGTH BUFSIZ
 
-#endif // _ENCODER_H
+char* generate_key(char* str, int size);
+int encrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key);
+int decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key);
+
+#endif // _XORENCODER_H

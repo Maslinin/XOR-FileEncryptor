@@ -1,79 +1,72 @@
 #include <stdio.h>
 #include <string.h>
-#include <limits.h>
+#include <stdlib.h>
 
 #include "Encoders/xorencoder.h"
 #include "Customs/cstmio.h"
 #include "Customs/cstmstr.h"
+#include "Constants.h"
 
-#define EXIT_SYMBOL 'q'
 #define DOWN putchar('\n')
-#define KEY_LENGTH BUFSIZ
+#define CLEAR_STDIN clear_stdin_buff()
 
-#ifdef PATH_MAX
-#define PATH_LENGTH PATH_MAX
-#else
-#define PATH_LENGTH 255
-#endif
-
-#define INPUT_SOURCE_FILE_MESSAGE "Input the path to the source file:"
-#define INPUT_TARGET_FILE_MESSAGE "Input the path to save the encrypted file:"
-#define INPUT_KEY_MODE_MESSAGE "Input the key mode (0 to input your key, 1 to generate key): "
-#define INPUT_MASK_MESSAGE "Input the encryption key (mask):"
-#define INPUT_ENCODER_MODE_MESSAGE "Input the program mode (1 to encrypt, 0 to decrypt): "
-#define INPUT_DEL_FILE_FLAG_MESSAGE "Input the flag to delete the source file (0 to do not touch, 1 to delete): "
-
-//Function that receives the location of the file and checks whether the file or path exists
-char *get_path(char *for_path, int path_length, const char *file_mode);
-//Function to input encryption key
-char *input_key(char *storage, int size);
+char* get_path(char* forPath, int keyLength, const char* file_mode);
+int check_path(const char* path, const char* fileMode);
+int get_int();
+char* input_key(char* storage, int size);
 
 int main(void)
 {
-    int exitCh;
+    int encMode = 0, keyMode = 0;
     char s_path[PATH_LENGTH], t_path[PATH_LENGTH];
     char key[KEY_LENGTH];
-    int encMode = 0, keyMode = 0, srcFileDelFlag = 0;
+    int exitCh;
 
     do
     {
         puts(INPUT_SOURCE_FILE_MESSAGE);
-        while(!(get_path(s_path, PATH_LENGTH, "rb")))
+        while(get_path(s_path, KEY_LENGTH, "rb") == NULL)
         {
             perror(NULL);
             DOWN;
             puts(INPUT_SOURCE_FILE_MESSAGE);
         }
-        clean_stdin_buff();
+        CLEAR_STDIN;
+        DOWN;
 
         puts(INPUT_TARGET_FILE_MESSAGE);
-        while(!(get_path(t_path, PATH_LENGTH, "wb")))
+        while(get_path(t_path, PATH_LENGTH, "wb") == NULL)
         {
             perror(NULL);
             DOWN;
             puts(INPUT_TARGET_FILE_MESSAGE);
         }
-        clean_stdin_buff();
+        CLEAR_STDIN;
+        DOWN;
 
         fputs(INPUT_ENCODER_MODE_MESSAGE, stdout);
-        while(!scanf("%d", &encMode))
+        while(scanf("%d", &encMode) == 0)
         {
-            clean_stdin_buff();
+            perror(NULL);
+            CLEAR_STDIN;
             DOWN;
             fputs(INPUT_ENCODER_MODE_MESSAGE, stdout);
         }
-        clean_stdin_buff();
+        CLEAR_STDIN;
+        DOWN;
 
         if(encMode)
         {
             fputs(INPUT_KEY_MODE_MESSAGE, stdout);
-            while(!scanf("%d", &keyMode))
+            while(scanf("%d", &keyMode) == 0)
             {
-                clean_stdin_buff();
+                perror(NULL);
+                CLEAR_STDIN;
                 DOWN;
                 fputs(INPUT_KEY_MODE_MESSAGE, stdout);
             }
-            clean_stdin_buff();
+            CLEAR_STDIN;
+            DOWN;
         }
 
         if(encMode && keyMode)
@@ -83,51 +76,49 @@ int main(void)
         else
         {
             puts(INPUT_MASK_MESSAGE);
-            while(!input_key(key, KEY_LENGTH))
+            while(input_key(key, KEY_LENGTH) != NULL)
             {
                 perror(NULL);
-                clean_stdin_buff();
+                CLEAR_STDIN;
                 DOWN;
                 puts(INPUT_MASK_MESSAGE);
             }
         }
-        clean_stdin_buff();
-
-        fputs(INPUT_DEL_FILE_FLAG_MESSAGE, stdout);
-        while(!scanf("%d", &srcFileDelFlag))
-        {
-            clean_stdin_buff();
-            DOWN;
-            fputs(INPUT_DEL_FILE_FLAG_MESSAGE, stdout);
-        }
-        clean_stdin_buff();
+        CLEAR_STDIN;
         DOWN;
 
         encMode ? puts("Encrypting file...") : puts("Decrypting file...");
-        if(file_encode(s_path, t_path, key, encMode, srcFileDelFlag))
+        if(encMode)
         {
-            encMode ? perror("Encode is fail. Please, try again") : perror("Decode is fail. Please, try again");
-            DOWN;
-        }
-        else
-        {
-            if(encMode)
+            if(encrypt_file(s_path, t_path, key) == EXIT_SUCCESS)
             {
                 puts("The file was successfully encrypted. Your key:");
                 puts(key);
             }
             else
             {
+                perror("Encryption failed. Please, try again");
+                DOWN;
+            }
+        }
+        else
+        {
+            if(decrypt_file(s_path, t_path, key) == EXIT_SUCCESS)
+            {
                 puts("The file was successfully decrypted.");
             }
-            DOWN;
+            else
+            {
+                perror("Decryption failed. Please, try again");
+                DOWN;
+            }
         }
 
         printf("Input \'%c\' to exit or any other key if you want to continue\n", EXIT_SYMBOL);
         fputs("Input a symbol: ", stdout);
         exitCh = getchar();
 
-        clean_stdin_buff();
+        CLEAR_STDIN;
         DOWN;
     }
     while(exitCh != EXIT_SYMBOL);
@@ -135,41 +126,51 @@ int main(void)
     return 0;
 }
 
-char *get_path(char* for_path, int path_length, const char* file_mode)
+char* get_path(char* forPath, int keyLength, const char* fileMode)
 {
-    FILE *fs = NULL;
+    FILE* fs = NULL;
 
-    //Enter the path and remove all spaces from the line (del_spaces, s_gets and clean_stdin_buff() - custom functions from cstmio.h)
-    if(!del_spaces(s_gets(for_path, path_length)))
+    s_gets(forPath, keyLength);
+    remove_spaces(forPath);
+
+    if(check_path(forPath, fileMode) == EXIT_FAILURE)
     {
         return NULL;
     }
 
-    if(!(fs = fopen(for_path, file_mode)))
-    {
-        return NULL;
-    }
-    if(fclose(fs) == EOF)
-    {
-        return NULL;
-    }
-
-    //If writing to a file is intended, delete the open (created) file
-    if(!strcmp(file_mode, "wb") && remove(for_path))
-    {
-        return NULL;
-    }
-
-    return for_path;
+    return forPath;
 }
 
-char *input_key(char *for_key, int size)
+int check_path(const char* path, const char* fileMode)
 {
-    if(s_gets(for_key, size) == NULL)
+    if (strcmp(fileMode, "rb") == 0 && file_exists_check(path))
     {
-        return NULL;
+        return EXIT_FAILURE;
     }
-    del_spaces(for_key);
+    if(strcmp(fileMode, "wb") == 0 && check_file_path_availability(path))
+    {
+        return EXIT_FAILURE;
+    }
 
-    return for_key;
+    return EXIT_SUCCESS;
+}
+
+int get_int()
+{
+    int arrSize = 10;
+    char str[arrSize];
+
+    s_gets(str, arrSize);
+    if(str == NULL)
+    {
+        return 0;
+    }
+}
+
+char* input_key(char* forKey, int size)
+{
+    s_gets(forKey, size);
+    remove_spaces(forKey);
+
+    return forKey;
 }
