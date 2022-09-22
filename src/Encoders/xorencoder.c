@@ -9,8 +9,7 @@
 #include <string.h>
 
 static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode);
-static int open_source_and_target_files(const char* srcFilePath, const char* trgFilePath, const FILE* fs, const FILE* ft);
-static int close_source_and_target_files(const FILE* fs, const FILE* ft);
+static int check_that_files_are_open(const FILE* fs, const FILE* ft);
 static char encrypt_byte(char ch, const char* key);
 static char decrypt_byte(char ch, const char* key);
 
@@ -26,10 +25,11 @@ inline int decrypt_file(const char* srcFilePath, const char* trgFilePath, const 
 
 static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode)
 {
-    FILE* fs = NULL, *ft = NULL;
+    FILE* fs = fopen(srcFilePath, "rb");
+    FILE* ft = fopen(trgFilePath, "wb");
     char ch = '\0';
 
-    if (open_source_and_target_files(srcFilePath, trgFilePath, fs, ft) == EXIT_FAILURE)
+    if (check_that_files_are_open(fs, ft) == EXIT_FAILURE)
     {
         return EXIT_FAILURE;
     }
@@ -43,32 +43,23 @@ static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFileP
             ch = decrypt_byte(ch, key);
         fwrite(&ch, sizeof(ch), 1, ft);
     }
-    close_source_and_target_files(fs, ft);
 
-    return EXIT_SUCCESS;
-}
-
-static int open_source_and_target_files(const char* srcFilePath, const char* trgFilePath, const FILE* outFs, const FILE* outFt)
-{
-    outFs = fopen(srcFilePath, "rb");
-    outFt = fopen(trgFilePath, "wb");
-
-    if (outFs == NULL)
-    {
-        return EXIT_FAILURE;
-    }
-    if (outFt == NULL)
-    {
-        fclose(outFs);
-        return EXIT_FAILURE;
-    }
-
-    return EXIT_SUCCESS;
-}
-
-static inline int close_source_and_target_files(const FILE* fs, const FILE* ft)
-{
     return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
+static int check_that_files_are_open(const FILE* fs, const FILE* ft)
+{
+    if (fs == NULL)
+    {
+        return EXIT_FAILURE;
+    }
+    if (ft == NULL)
+    {
+        fclose(fs);
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
 
 static char encrypt_byte(char ch, const char* key)
