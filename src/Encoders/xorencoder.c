@@ -1,6 +1,6 @@
 #include "xorencoder.h"
 
-#include "../Customs/cstmio.h"
+#include "../IO/cstmio.h"
 #include "../Customs/cstmstr.h"
 
 #include <stdio.h>
@@ -9,7 +9,7 @@
 #include <string.h>
 
 static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode);
-static int check_that_files_are_open(const FILE* fs, const FILE* ft);
+static int check_that_files_are_open(FILE* fs, FILE* ft);
 static char encrypt_byte(char ch, const char* key);
 static char decrypt_byte(char ch, const char* key);
 
@@ -47,7 +47,7 @@ static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFileP
     return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-static int check_that_files_are_open(const FILE* fs, const FILE* ft)
+static int check_that_files_are_open(FILE* fs, FILE* ft)
 {
     if (fs == NULL)
     {

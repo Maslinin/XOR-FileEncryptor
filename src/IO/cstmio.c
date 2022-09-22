@@ -1,5 +1,5 @@
 #include "cstmio.h"
-#include "cstmstr.h"
+#include "../Customs/cstmstr.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -18,15 +18,10 @@ char* s_gets(char* str, int len)
         if (symb != NULL)
             *symb = '\0';
         else
-            clear_stdin_buff();
+            CLEAR_STDIN;
     }
 
     return res;
-}
-
-void clear_stdin_buff(void)
-{
-    clear_buff(stdin);
 }
 
 void clear_buff(FILE* stream)

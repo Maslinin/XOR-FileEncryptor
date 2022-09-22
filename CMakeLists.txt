@@ -17,7 +17,9 @@ endif()
 
 add_executable(FileEncoder 
 	src/main.c
-	src/constants.h
+	src/Definitions/macros.h
+	src/Definitions/constants.h
+	src/IO/input.h src/IO/input.c
 	src/Encoders/xorencoder.h src/Encoders/xorencoder.c
-	src/Customs/cstmio.h src/Customs/cstmio.c
+	src/IO/cstmio.h src/IO/cstmio.c
 	src/Customs/cstmstr.h src/Customs/cstmstr.c)
