@@ -43,6 +43,7 @@ int main(void)
         }
         DOWN;
 
+        printf("Input \'%c\' to exit or any other key if you want to continue\n", EXIT_SYMBOL);
         input_exit_symbol(&exitCh);
     } 
     while (exitCh != EXIT_SYMBOL);
