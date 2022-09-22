@@ -6,7 +6,7 @@
 #ifdef PATH_MAX
 #define PATH_LENGTH PATH_MAX
 #else
-#define PATH_LENGTH 256
+#define PATH_LENGTH 255
 #endif
 
 #define EXIT_SYMBOL 'q'
