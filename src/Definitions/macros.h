@@ -6,4 +6,4 @@
 #define DOWN putchar('\n')
 #define CLEAR_STDIN_AND_DOWN CLEAR_STDIN; DOWN
 
-#endif // 
+#endif // _MACROS_H
