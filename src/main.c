@@ -10,14 +10,13 @@
 #define DOWN putchar('\n')
 #define CLEAR_STDIN clear_stdin_buff()
 
-char* input_key(char* storage, int size);
+char* input_key(char* forKey, int size);
 
 int main(void)
 {
-    int encMode = 0, keyMode = 0;
+    int encMode = 0, keyMode = 0, exitCh = 0;
     char s_path[PATH_LENGTH], t_path[PATH_LENGTH];
     char key[KEY_LENGTH];
-    int exitCh;
 
     do
     {

@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "cstmstr.h"
+
 static int check_path(const char* path, const char* fileMode);
 
 char* s_gets(char* str, int len)
@@ -47,8 +49,6 @@ void clear_buff(FILE* stream)
 
 char* get_path(char* forPath, int keyLength, const char* fileMode)
 {
-    FILE* fs = NULL;
-
     s_gets(forPath, keyLength);
     remove_spaces(forPath);
 

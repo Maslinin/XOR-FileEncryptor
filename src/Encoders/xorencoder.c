@@ -9,8 +9,8 @@
 #include <string.h>
 
 static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode);
-static int open_source_and_target_files(const char* srcFilePath, const char* trgFilePath, FILE* fs, FILE* ft);
-static int close_source_and_target_files(FILE* fs, FILE* ft);
+static int open_source_and_target_files(const char* srcFilePath, const char* trgFilePath, const FILE* fs, const FILE* ft);
+static int close_source_and_target_files(const FILE* fs, const FILE* ft);
 static char encrypt_byte(char ch, const char* key);
 static char decrypt_byte(char ch, const char* key);
 
@@ -48,7 +48,7 @@ static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFileP
     return EXIT_SUCCESS;
 }
 
-static int open_source_and_target_files(const char* srcFilePath, const char* trgFilePath, FILE* outFs, FILE* outFt)
+static int open_source_and_target_files(const char* srcFilePath, const char* trgFilePath, const FILE* outFs, const FILE* outFt)
 {
     outFs = fopen(srcFilePath, "rb");
     outFt = fopen(trgFilePath, "wb");
@@ -66,7 +66,7 @@ static int open_source_and_target_files(const char* srcFilePath, const char* trg
     return EXIT_SUCCESS;
 }
 
-static inline int close_source_and_target_files(FILE* fs, FILE* ft)
+static inline int close_source_and_target_files(const FILE* fs, const FILE* ft)
 {
     return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
