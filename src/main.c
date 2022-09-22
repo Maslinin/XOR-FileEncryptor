@@ -5,8 +5,8 @@
 #include "IO/cstmio.h"
 #include "Customs/cstmstr.h"
 #include "Encoders/xorencoder.h"
-#include "Definitions/Macros.h"
-#include "Definitions/Constants.h"
+#include "Definitions/macros.h"
+#include "Definitions/constants.h"
 
 int main(void)
 {

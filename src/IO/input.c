@@ -5,11 +5,12 @@
 #include "../Definitions/constants.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <stddef.h>
 
 char* input_path(char* forPath, int pathLength, const char* fileMode)
 {
-    char* textToDisplay = (strcmp(fileMode, "rb") == 0) ? INPUT_SOURCE_FILE_MESSAGE : INPUT_TARGET_FILE_MESSAGE;
+    const char* textToDisplay = (strcmp(fileMode, "rb") == 0) ? INPUT_SOURCE_FILE_MESSAGE : INPUT_TARGET_FILE_MESSAGE;
 
     puts(textToDisplay);
 
