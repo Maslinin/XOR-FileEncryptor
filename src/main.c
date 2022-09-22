@@ -24,7 +24,6 @@ int main(void)
         {
             input_key_mode(&keyMode);
         }
-
         (!encMode || keyMode) ? input_key(key, KEY_LENGTH) : generate_key(key, KEY_LENGTH);
 
         encMode ? puts("Encrypting file...") : puts("Decrypting file...");
@@ -44,8 +43,6 @@ int main(void)
         }
         DOWN;
 
-        printf("Input \'%c\' to exit or any other key if you want to continue\n", EXIT_SYMBOL);
-        fputs("Input a symbol: ", stdout);
         input_exit_symbol(&exitCh);
     } 
     while (exitCh != EXIT_SYMBOL);

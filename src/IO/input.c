@@ -68,6 +68,9 @@ char* input_key(char* forKey, int size)
 
 int input_exit_symbol(int* exitCh)
 {
+    printf("Input \'%c\' to exit or any other key if you want to continue\n", EXIT_SYMBOL);
+    fputs("Input a symbol: ", stdout);
+
     *exitCh = getchar();
     CLEAR_STDIN_AND_DOWN;
 
