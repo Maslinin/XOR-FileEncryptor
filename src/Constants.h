@@ -6,7 +6,11 @@
 #ifdef PATH_MAX
 #define PATH_LENGTH PATH_MAX
 #else
+#if 255 > BUFSIZ - 1
+#define PATH_LENGTH BUFSIZ - 1
+#else
 #define PATH_LENGTH 255
+#endif
 #endif
 
 #define EXIT_SYMBOL 'q'
