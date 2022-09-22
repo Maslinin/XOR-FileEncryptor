@@ -68,7 +68,7 @@ char* input_key(char* forKey, int size)
 
 int input_exit_symbol(int* exitCh)
 {
-    fputs("Input a symbol: ", stdout);
+    fputs(INPUT_EXIT_SYMBOL_MESSAGE, stdout);
 
     *exitCh = getchar();
     CLEAR_STDIN_AND_DOWN;

@@ -21,5 +21,6 @@
 #define INPUT_ENCODER_MODE_MESSAGE "Input the program mode\n1. 1 to encrypt\n2. 0 to decrypt\nInput: "
 #define INPUT_KEY_MODE_MESSAGE "Input the key mode.\n1. 1 to input your key\n2. 0 to generate key\nInput: "
 #define INPUT_KEY_MESSAGE "Input the encryption key:\n"
+#define INPUT_EXIT_SYMBOL_MESSAGE "Input a symbol: "
 
 #endif // _CONSTANTS_H
