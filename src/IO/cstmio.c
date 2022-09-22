@@ -82,14 +82,14 @@ int check_file_path_availability(const char* filePath)
     return (fs != NULL && fclose(fs) != EOF && remove(filePath) == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-int read_byte_from_file(FILE* fs, char* byte)
+int read_byte_from_file(FILE* fs, const char* byte)
 {
     fread(byte, sizeof(*byte), 1, fs);
 
     return ferror(fs);
 }
 
-int write_byte_to_file(FILE* fs, char* byte)
+int write_byte_to_file(FILE* fs, const char* byte)
 {
     fwrite(byte, sizeof(*byte), 1, fs);
 
