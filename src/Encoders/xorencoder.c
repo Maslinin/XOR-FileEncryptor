@@ -36,12 +36,12 @@ static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFileP
 
     while (!feof(fs))
     {
-        fread(&ch, sizeof(ch), 1, fs);
+        read_byte_from_file(fs, &ch);
         if (mode)
             ch = encrypt_byte(ch, key);
         else
             ch = decrypt_byte(ch, key);
-        fwrite(&ch, sizeof(ch), 1, ft);
+        write_byte_to_file(ft, &ch);
     }
 
     return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;

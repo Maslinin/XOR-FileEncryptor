@@ -30,7 +30,7 @@ int main(void)
         if (encMode)
         {
             if(encrypt_file(s_path, t_path, key) == EXIT_SUCCESS)
-                printf("The file was successfully encrypted. Your key:\n%s", key);
+                printf("The file was successfully encrypted. Your key:\n%s\n", key);
             else
                 perror("Encryption failed. Please, try again");
         }
