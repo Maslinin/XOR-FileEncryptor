@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.3 FATAL_ERROR)
 
-project(XOR-FileEncoder)
+project(XOR-FileEncryptor)
 
 #Change language version to c99
 set(CMAKE_C_STANDARD 99)
@@ -15,11 +15,11 @@ if (MSVC)
     add_compile_options(/W2)
 endif()
 
-add_executable(FileEncoder 
+add_executable(FileEncryptor
 	src/main.c
 	src/Definitions/macros.h
 	src/Definitions/constants.h
 	src/IO/input.h src/IO/input.c
-	src/Encoders/xorencoder.h src/Encoders/xorencoder.c
+	src/Encryptors/xorencryptor.h src/Encryptors/xorencryptor.c
 	src/IO/cstmio.h src/IO/cstmio.c
 	src/Customs/cstmstr.h src/Customs/cstmstr.c)

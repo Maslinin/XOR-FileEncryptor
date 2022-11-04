@@ -4,7 +4,7 @@
 #include "IO/input.h"
 #include "IO/cstmio.h"
 #include "Customs/cstmstr.h"
-#include "Encoders/xorencoder.h"
+#include "Encryptors/xorencryptor.h"
 #include "Definitions/macros.h"
 #include "Definitions/constants.h"
 

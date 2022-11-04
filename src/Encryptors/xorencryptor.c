@@ -1,4 +1,4 @@
-#include "xorencoder.h"
+#include "xorencryptor.h"
 
 #include "../IO/cstmio.h"
 #include "../Customs/cstmstr.h"

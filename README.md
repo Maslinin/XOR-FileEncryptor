@@ -1,7 +1,7 @@
-[![Build Status](https://github.com/Maslinin/XOR-File-Encoder/workflows/Build/badge.svg)](https://github.com/Maslinin/XOR-File-Encoder/actions/workflows/build.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Maslinin_XOR-File-Encoder&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Maslinin_XOR-File-Encoder) [![GitHub license](https://badgen.net/github/license/Maslinin/XOR-File-Encoder)](https://github.com/Maslinin/XOR-File-Encoder/blob/master/LICENSE)
+[![Build Status](https://github.com/Maslinin/XOR-FileEncryptor/workflows/Build/badge.svg)](https://github.com/Maslinin/XOR-FileEncryptor/actions/workflows/build.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Maslinin_XOR-FileEncryptor&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Maslinin_XOR-FileEncryptor) [![GitHub license](https://badgen.net/github/license/Maslinin/XOR-FileEncryptor)](https://github.com/Maslinin/XOR-FileEncryptor/blob/master/LICENSE)
 
-# FileEncoder
-File Encoder using XOR
+# FileEncryptor
+File Encryptor using XOR
 
 ### Cheat Sheet for Building via CMake:
 Command to CMake configure for CodeBlocks with MinGW:      
