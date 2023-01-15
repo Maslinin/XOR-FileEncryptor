@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-static int check_path(const char* path, const char* fileMode);
+static int check_path_correct_by_mode(const char* path, const char* fileMode);
 
 char* s_gets(char* str, int len)
 {
@@ -46,7 +46,7 @@ char* get_path(char* forPath, int keyLength, const char* fileMode)
     s_gets(forPath, keyLength);
     remove_spaces(forPath);
 
-    if (check_path(forPath, fileMode) == EXIT_FAILURE)
+    if (check_path_correct_by_mode(forPath, fileMode) == EXIT_FAILURE)
     {
         return NULL;
     }
@@ -54,13 +54,13 @@ char* get_path(char* forPath, int keyLength, const char* fileMode)
     return forPath;
 }
 
-static int check_path(const char* path, const char* fileMode)
+static int check_path_correct_by_mode(const char* path, const char* fileMode)
 {
-    if (strcmp(fileMode, "rb") == 0 && file_exists_check(path) == EXIT_FAILURE)
+    if (strcmp(fileMode, "rb") == 0 && file_exists(path) == EXIT_FAILURE)
     {
         return EXIT_FAILURE;
     }
-    if (strcmp(fileMode, "wb") == 0 && check_file_path_availability(path) == EXIT_FAILURE)
+    if (strcmp(fileMode, "wb") == 0 && file_path_is_valid(path) == EXIT_FAILURE)
     {
         return EXIT_FAILURE;
     }
@@ -68,14 +68,14 @@ static int check_path(const char* path, const char* fileMode)
     return EXIT_SUCCESS;
 }
 
-int file_exists_check(const char* filePath)
+int file_exists(const char* filePath)
 {
     FILE* fs = fopen(filePath, "rb");
 
     return (fs != NULL && fclose(fs) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-int check_file_path_availability(const char* filePath)
+int file_path_is_valid(const char* filePath)
 {
     FILE* fs = fopen(filePath, "wb");
 
