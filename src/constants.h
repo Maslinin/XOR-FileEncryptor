@@ -1,7 +1,12 @@
 #ifndef _CONSTANTS_H
 #define _CONSTANTS_H
 
+#include "IO/cstmio.h"
+
 #include <limits.h>
+
+#define DOWN putchar('\n')
+#define CLEAR_STDIN_AND_DOWN CLEAR_STDIN; DOWN
 
 #define EXIT_SYMBOL 'q'
 #define KEY_LENGTH BUFSIZ - 1

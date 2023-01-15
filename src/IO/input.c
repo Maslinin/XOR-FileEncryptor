@@ -1,8 +1,7 @@
 #include "input.h"
 #include "cstmio.h"
+#include "../constants.h"
 #include "../Customs/cstmstr.h"
-#include "../Definitions/macros.h"
-#include "../Definitions/constants.h"
 
 #include <stdio.h>
 #include <string.h>

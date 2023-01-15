@@ -17,8 +17,7 @@ endif()
 
 add_executable(FileEncryptor
 	src/main.c
-	src/Definitions/macros.h
-	src/Definitions/constants.h
+	src/constants.h
 	src/IO/input.h src/IO/input.c
 	src/Encryptors/xorencryptor.h src/Encryptors/xorencryptor.c
 	src/IO/cstmio.h src/IO/cstmio.c

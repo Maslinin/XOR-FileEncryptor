@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "constants.h"
 #include "IO/input.h"
 #include "IO/cstmio.h"
 #include "Customs/cstmstr.h"
 #include "Encryptors/xorencryptor.h"
-#include "Definitions/macros.h"
-#include "Definitions/constants.h"
 
 int main(void)
 {
@@ -29,7 +28,7 @@ int main(void)
         encMode ? puts("Encrypting file...") : puts("Decrypting file...");
         if (encMode)
         {
-            if(encrypt_file(s_path, t_path, key) == EXIT_SUCCESS)
+            if (encrypt_file(s_path, t_path, key) == EXIT_SUCCESS)
                 printf("The file was successfully encrypted. Your key:\n%s\n", key);
             else
                 perror("Encryption failed. Please, try again");

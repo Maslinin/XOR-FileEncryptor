@@ -9,7 +9,7 @@
 #include <string.h>
 
 static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode);
-static int check_that_files_are_open(FILE* fs, FILE* ft);
+static int files_are_open(FILE* fs, FILE* ft);
 static char encrypt_byte(char ch, const char* key);
 static char decrypt_byte(char ch, const char* key);
 
@@ -29,7 +29,7 @@ static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFileP
     FILE* ft = fopen(trgFilePath, "wb");
     char ch = '\0';
 
-    if (check_that_files_are_open(fs, ft) == EXIT_FAILURE)
+    if (files_are_open(fs, ft) == EXIT_FAILURE)
     {
         return EXIT_FAILURE;
     }
@@ -47,7 +47,7 @@ static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFileP
     return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-static int check_that_files_are_open(FILE* fs, FILE* ft)
+static int files_are_open(FILE* fs, FILE* ft)
 {
     if (fs == NULL)
     {
