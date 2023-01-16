@@ -1,5 +1,5 @@
-#ifndef _macros_H
-#define _macros_H
+#ifndef _MACROS_H
+#define _MACROS_H
 
 #include "Customs/cstmio.h"
 
@@ -28,4 +28,4 @@
 #define INPUT_KEY_MESSAGE "Input the encryption key:\n"
 #define INPUT_EXIT_SYMBOL_MESSAGE "Input a symbol: "
 
-#endif // _macros_H
+#endif // _MACROS_H

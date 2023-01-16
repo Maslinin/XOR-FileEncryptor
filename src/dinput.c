@@ -1,4 +1,4 @@
-#include "input.h"
+#include "dinput.h"
 #include "macros.h"
 #include "Customs/cstmio.h"
 #include "Customs/cstmstr.h"
