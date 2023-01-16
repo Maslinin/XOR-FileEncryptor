@@ -41,7 +41,7 @@ void clear_buff(FILE* stream)
     }
 }
 
-char* get_path(char* forPath, int keyLength, const char* fileMode)
+char* get_valid_path(char* forPath, int keyLength, const char* fileMode)
 {
     s_gets(forPath, keyLength);
     remove_spaces(forPath);

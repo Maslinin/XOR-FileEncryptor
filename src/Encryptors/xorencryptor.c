@@ -1,6 +1,6 @@
 #include "xorencryptor.h"
 
-#include "../IO/cstmio.h"
+#include "../Customs/cstmio.h"
 #include "../Customs/cstmstr.h"
 
 #include <stdio.h>

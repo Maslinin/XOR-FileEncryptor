@@ -1,7 +1,7 @@
-#ifndef _CONSTANTS_H
-#define _CONSTANTS_H
+#ifndef _macros_H
+#define _macros_H
 
-#include "IO/cstmio.h"
+#include "Customs/cstmio.h"
 
 #include <limits.h>
 
@@ -28,4 +28,4 @@
 #define INPUT_KEY_MESSAGE "Input the encryption key:\n"
 #define INPUT_EXIT_SYMBOL_MESSAGE "Input a symbol: "
 
-#endif // _CONSTANTS_H
+#endif // _macros_H

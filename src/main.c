@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "constants.h"
-#include "IO/input.h"
-#include "IO/cstmio.h"
+#include "input.h"
+#include "macros.h"
+#include "Customs/cstmio.h"
 #include "Customs/cstmstr.h"
 #include "Encryptors/xorencryptor.h"
 

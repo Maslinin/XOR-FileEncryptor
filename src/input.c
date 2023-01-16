@@ -1,7 +1,7 @@
 #include "input.h"
-#include "cstmio.h"
-#include "../constants.h"
-#include "../Customs/cstmstr.h"
+#include "macros.h"
+#include "Customs/cstmio.h"
+#include "Customs/cstmstr.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -13,7 +13,7 @@ char* input_path(char* forPath, int pathLength, const char* fileMode)
 
     puts(textToDisplay);
 
-    while (get_path(forPath, pathLength, fileMode) == NULL)
+    while (get_valid_path(forPath, pathLength, fileMode) == NULL)
     {
         perror(NULL);
         CLEAR_STDIN_AND_DOWN;

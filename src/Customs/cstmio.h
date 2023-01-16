@@ -7,7 +7,7 @@
 
 char* s_gets(char* str, int len);
 void clear_buff(FILE* stream);
-char* get_path(char* forPath, int keyLength, const char* file_mode);
+char* get_valid_path(char* forPath, int keyLength, const char* file_mode);
 int file_exists(const char* filePath);
 int file_path_is_valid(const char* filePath);
 int read_byte_from_file(FILE* fs, char* byte);
