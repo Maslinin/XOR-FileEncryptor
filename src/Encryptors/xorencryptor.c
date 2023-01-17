@@ -1,7 +1,7 @@
 #include "xorencryptor.h"
 
-#include "../Customs/cstmio.h"
-#include "../Customs/cstmstr.h"
+#include "../Custom/cstmio.h"
+#include "../Custom/cstmstr.h"
 
 #include <stdio.h>
 #include <stdlib.h>

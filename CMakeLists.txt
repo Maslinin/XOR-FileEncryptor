@@ -20,5 +20,5 @@ add_executable(FileEncryptor
 	src/macros.h
 	src/dinput.h src/dinput.c
 	src/Encryptors/xorencryptor.h src/Encryptors/xorencryptor.c
-	src/Customs/cstmio.h src/Customs/cstmio.c
-	src/Customs/cstmstr.h src/Customs/cstmstr.c)
+	src/Custom/cstmio.h src/Custom/cstmio.c
+	src/Custom/cstmstr.h src/Custom/cstmstr.c)

@@ -3,8 +3,8 @@
 
 #include "dinput.h"
 #include "macros.h"
-#include "Customs/cstmio.h"
-#include "Customs/cstmstr.h"
+#include "Custom/cstmio.h"
+#include "Custom/cstmstr.h"
 #include "Encryptors/xorencryptor.h"
 
 int main(void)
