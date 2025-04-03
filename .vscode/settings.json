@@ -1,0 +1,6 @@
+{
+    "cmake.generator": "MinGW Makefiles",
+    "cmake.environment": {
+        "PATH": "${env:PATH}"
+    }
+}
