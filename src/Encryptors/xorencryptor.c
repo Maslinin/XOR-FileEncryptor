@@ -1,106 +1,69 @@
 #include "xorencryptor.h"
-
-#include "../Custom/cstmio.h"
-#include "../Custom/cstmstr.h"
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
+#include <time.h>
 
-static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode);
-static int files_are_open(FILE* fs, FILE* ft);
-static char encrypt_byte(char ch, const char* key);
-static char decrypt_byte(char ch, const char* key);
-
-inline int encrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key)
+char *generateKey(char *buffer, size_t size)
 {
-    return (encrypt_or_decrypt_file(srcFilePath, trgFilePath, key, 1) == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
+    if (size == 0)
+    {
+        return buffer;
+    }
+
+    srand((unsigned int) time(NULL));
+    for (size_t i = 0; i < size - 1; ++i)
+    {
+        buffer[i] = (char) ((rand() % 94) + 33);
+    }
+
+    buffer[size - 1] = '\0';
+    return buffer;
 }
 
-inline int decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key)
+int encryptFile(const char *srcFilePath, const char *destFilePath, const char *key)
 {
-    return (encrypt_or_decrypt_file(srcFilePath, trgFilePath, key, 0) == EXIT_SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-static int encrypt_or_decrypt_file(const char* srcFilePath, const char* trgFilePath, const char* key, int mode)
-{
-    FILE* fs = fopen(srcFilePath, "rb");
-    FILE* ft = fopen(trgFilePath, "wb");
-    char ch = '\0';
-
-    if (files_are_open(fs, ft) == EXIT_FAILURE)
+    FILE *fs = fopen(srcFilePath, "rb");
+    if (!fs)
     {
         return EXIT_FAILURE;
     }
 
-    while (!feof(fs))
-    {
-        read_byte_from_file(fs, &ch);
-        if (mode)
-            ch = encrypt_byte(ch, key);
-        else
-            ch = decrypt_byte(ch, key);
-        write_byte_to_file(ft, &ch);
-    }
-
-    return (fclose(fs) != EOF && fclose(ft) != EOF) ? EXIT_SUCCESS : EXIT_FAILURE;
-}
-
-static int files_are_open(FILE* fs, FILE* ft)
-{
-    if (fs == NULL)
-    {
-        return EXIT_FAILURE;
-    }
-    if (ft == NULL)
+    FILE *ft = fopen(destFilePath, "wb");
+    if (!ft)
     {
         fclose(fs);
         return EXIT_FAILURE;
     }
 
-    return EXIT_SUCCESS;
-}
+    int result = EXIT_SUCCESS;
+    
+    int ch;
+    size_t keyIndex = 0, keyLength = strlen(key);
 
-static char encrypt_byte(char ch, const char* key)
-{
-    int i;
-    int keyLength = (int)strlen(key);
-
-    for (i = 0; i < keyLength; ++i)
+    while ((ch = fgetc(fs)) != EOF)
     {
-        ch ^= key[i];
+        unsigned char encrypted = (unsigned char)ch ^ key[keyIndex];
+        if (fputc(encrypted, ft) == EOF)
+        {
+            result = EXIT_FAILURE;
+            break;
+        }
+        keyIndex = (keyIndex + 1) % keyLength;
     }
 
-    return ch;
-}
-
-static char decrypt_byte(char ch, const char* key)
-{
-    int i;
-    int keyLength = (int)(strlen(key) - 1);
-
-    for (i = keyLength; i >= 0; --i)
+    if (ferror(ft))
     {
-        ch ^= key[i];
+        result = EXIT_FAILURE;
     }
 
-    return ch;
+    fclose(fs);
+    fclose(ft);
+
+    return result;
 }
 
-char* generate_key(char* str, int size)
+int decryptFile(const char *srcFilePath, const char *destFilePath, const char *key)
 {
-    int i;
-
-    srand((unsigned int)time(NULL));
-
-    for (i = 0; i < size; ++i)
-    {
-        str[i] = rand()%95 + 33; //character range in ASCII
-    }
-
-    remove_spaces(str);
-    str[size - 1] = '\0';
-
-    return str;
+    return encryptFile(srcFilePath, destFilePath, key);
 }

@@ -2,5 +2,11 @@
     "cmake.generator": "MinGW Makefiles",
     "cmake.environment": {
         "PATH": "${env:PATH}"
+    },
+    "files.associations": {
+        "xorcipher.h": "c",
+        "constants.h": "c",
+        "string.h": "c",
+        "stdio.h": "c"
     }
 }

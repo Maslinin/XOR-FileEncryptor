@@ -8,19 +8,15 @@ set(CMAKE_C_STANDARD_REQUIRED TRUE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/bin)
 
 set(HEADERS
-	src/macros.h 
-	src/dinput.h 
+	src/constants.h
 	src/Encryptors/xorencryptor.h
-	src/Custom/cstmio.h 
-	src/Custom/cstmstr.h
+	src/Cli/options.h
 )
 
 set(SOURCES
-	src/main.c 
-	src/dinput.c 
+	src/main.c
 	src/Encryptors/xorencryptor.c
-	src/Custom/cstmio.c
-	src/Custom/cstmstr.c
+	src/Cli/options.c
 )
 
 add_executable(FileEncryptor
