@@ -4,9 +4,10 @@
         "PATH": "${env:PATH}"
     },
     "files.associations": {
-        "xorcipher.h": "c",
+        "xorencryptor.h": "c",
         "constants.h": "c",
-        "string.h": "c",
-        "stdio.h": "c"
+        "args.h": "c",
+        "argHandlers": "c",
+        "stddef.h": "c"
     }
 }

@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <time.h>
 
-static int isSafeChar(char ch);
+static bool isSafeChar(char ch);
 
 char *generateKey(char *buffer, size_t size)
 {
@@ -70,7 +71,7 @@ int decryptFile(const char *srcFilePath, const char *destFilePath, const char *k
     return encryptFile(srcFilePath, destFilePath, key);
 }
 
-static isSafeChar(char ch)
+static bool isSafeChar(char ch)
 {
     return (ch >= 33 && ch <= 126) && ch != '\\' && ch != '"' && ch != '\'';
 }

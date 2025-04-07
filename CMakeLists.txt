@@ -11,12 +11,14 @@ set(HEADERS
 	src/constants.h
 	src/Encryptors/xorencryptor.h
 	src/Cli/args.h
+	src/Cli/argHandlers.h
 )
 
 set(SOURCES
 	src/main.c
 	src/Encryptors/xorencryptor.c
 	src/Cli/args.c
+	src/Cli/argHandlers.c
 )
 
 add_executable(FileEncryptor

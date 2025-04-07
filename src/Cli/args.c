@@ -1,30 +1,15 @@
 #include "args.h"
+#include "argHandlers.h"
 #include "../constants.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
+#include <stdbool.h>
 
-void printUsage(const char *programName);
-static int handleEncrypt(int argc, char *argv[], int *i, CliArgs *opts);
-static int handleDecrypt(int argc, char *argv[], int *i, CliArgs *opts);
-static int handleGenerateKey(int argc, char *argv[], int *i, CliArgs *opts);
-static int handleKey(int argc, char *argv[], int *i, CliArgs *opts);
-static int handleInput(int argc, char *argv[], int *i, CliArgs *opts);
-static int handleOutput(int argc, char *argv[], int *i, CliArgs *opts);
-static int parseFlag(int argc, char *argv[], int *i, int *target, int value);
-static int parseString(int argc, char *argv[], int *i, const char **target);
+static void printUsage(const char *programName);
 static int validateCliArgs(const CliArgs *opts, const char *programName);
 
-typedef int (*ArgHandler)(int argc, char *argv[], int *i, CliArgs *opts);
-
-typedef struct
-{
-    const char *flag;
-    ArgHandler handler;
-} ArgOption;
-
-static ArgOption argCliArgs[] = {
+ArgOption argOptions[] = {
     {"-e", handleEncrypt},
     {"-d", handleDecrypt},
     {"-g", handleGenerateKey},
@@ -41,8 +26,8 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
 
     for (int i = 1; i < argc; ++i)
     {
-        int matched = 0;
-        for (ArgOption *opt = argCliArgs; opt->flag; ++opt)
+        bool matched = false;
+        for (ArgOption *opt = argOptions; opt->flag; ++opt)
         {
             if (strcmp(argv[i], opt->flag) == 0)
             {
@@ -51,11 +36,11 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
                     printUsage(argv[0]);
                     return EXIT_FAILURE;
                 }
-                matched = 1;
+                matched = true;
                 break;
             }
         }
-        
+
         if (!matched)
         {
             fprintf(stderr, "Unknown option: %s\n", argv[i]);
@@ -65,56 +50,6 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
     }
 
     return validateCliArgs(opts, argv[0]);
-}
-
-void printUsage(const char *programName)
-{
-    fprintf(stderr, "Usage: %s [-e | -d] [-k <key> | -g] -i <input_file> -o <output_file>\n", programName);
-}
-
-static int handleEncrypt(int argc, char *argv[], int *i, CliArgs *opts)
-{
-    return parseFlag(argc, argv, i, &opts->encryptMode, 1);
-}
-
-static int handleDecrypt(int argc, char *argv[], int *i, CliArgs *opts)
-{
-    return parseFlag(argc, argv, i, &opts->encryptMode, 0);
-}
-
-static int handleGenerateKey(int argc, char *argv[], int *i, CliArgs *opts)
-{
-    return parseFlag(argc, argv, i, &opts->generateKey, 1);
-}
-
-static int handleKey(int argc, char *argv[], int *i, CliArgs *opts)
-{
-    return parseString(argc, argv, i, &opts->key);
-}
-
-static int handleInput(int argc, char *argv[], int *i, CliArgs *opts)
-{
-    return parseString(argc, argv, i, &opts->inputPath);
-}
-
-static int handleOutput(int argc, char *argv[], int *i, CliArgs *opts)
-{
-    return parseString(argc, argv, i, &opts->outputPath);
-}
-
-static int parseFlag(int argc, char *argv[], int *i, int *target, int value)
-{
-    (void)argc; (void)argv;
-    *target = value;
-    return 0;
-}
-
-static int parseString(int argc, char *argv[], int *i, const char **target)
-{
-    if (*i + 1 >= argc)
-        return -1;
-    *target = argv[++(*i)];
-    return 0;
 }
 
 static int validateCliArgs(const CliArgs *opts, const char *programName)
@@ -140,7 +75,7 @@ static int validateCliArgs(const CliArgs *opts, const char *programName)
     }
     else
     {
-        if(opts->generateKey)
+        if (opts->generateKey)
         {
             fprintf(stderr, "Error: -g cannot be used in decryption mode.\n");
             return EXIT_FAILURE;
@@ -159,4 +94,9 @@ static int validateCliArgs(const CliArgs *opts, const char *programName)
     }
 
     return EXIT_SUCCESS;
+}
+
+static void printUsage(const char *programName)
+{
+    fprintf(stderr, "Usage: %s [-e | -d] [-k <key> | -g] -i <input_file> -o <output_file>\n", programName);
 }
