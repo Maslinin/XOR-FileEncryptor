@@ -1,5 +1,5 @@
 #include "Encryptors/xorencryptor.h"
-#include "Cli/options.h"
+#include "Cli/args.h"
 #include "constants.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,8 +7,8 @@
 
 int main(int argc, char *argv[])
 {
-    CliOptions opts;
-    if (parseArgs(argc, argv, &opts) != 0)
+    CliArgs opts;
+    if (parseArgs(argc, argv, &opts))
     {
         return EXIT_FAILURE;
     }

@@ -4,17 +4,19 @@
 #include <string.h>
 #include <time.h>
 
+static int isSafeChar(char ch);
+
 char *generateKey(char *buffer, size_t size)
 {
-    if (size == 0)
-    {
-        return buffer;
-    }
-
     srand((unsigned int) time(NULL));
-    for (size_t i = 0; i < size - 1; ++i)
+    size_t i = 0;
+    while (i < size - 1)
     {
-        buffer[i] = (char) ((rand() % 94) + 33);
+        char candidate = (char)((rand() % (126 - 33 + 1)) + 33);
+        if (isSafeChar(candidate))
+        {
+            buffer[i++] = candidate;
+        }
     }
 
     buffer[size - 1] = '\0';
@@ -66,4 +68,9 @@ int encryptFile(const char *srcFilePath, const char *destFilePath, const char *k
 int decryptFile(const char *srcFilePath, const char *destFilePath, const char *key)
 {
     return encryptFile(srcFilePath, destFilePath, key);
+}
+
+static isSafeChar(char ch)
+{
+    return (ch >= 33 && ch <= 126) && ch != '\\' && ch != '"' && ch != '\'';
 }
