@@ -1,5 +1,5 @@
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#ifndef ARGS_H
+#define ARGS_H
 
 typedef struct
 {
@@ -12,4 +12,4 @@ typedef struct
 
 int parseArgs(int argc, char *argv[], CliArgs *outOptions);
 
-#endif // OPTIONS_H
+#endif // ARGS_H
