@@ -7,9 +7,9 @@
 #include <stdbool.h>
 
 static void printUsage(const char *programName);
-static int validateCliArgs(const CliArgs *opts, const char *programName);
+static int validateArgs(const CliArgs *opts, const char *programName);
 
-ArgOption argOptions[] = {
+const ArgOption argOptions[] = {
     {"-e", handleEncrypt},
     {"-d", handleDecrypt},
     {"-g", handleGenerateKey},
@@ -27,7 +27,7 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
     for (int i = 1; i < argc; ++i)
     {
         bool matched = false;
-        for (ArgOption *opt = argOptions; opt->flag; ++opt)
+        for (const ArgOption *opt = argOptions; opt->flag; ++opt)
         {
             if (strcmp(argv[i], opt->flag) == 0)
             {
@@ -49,10 +49,10 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
         }
     }
 
-    return validateCliArgs(opts, argv[0]);
+    return validateArgs(opts, argv[0]);
 }
 
-static int validateCliArgs(const CliArgs *opts, const char *programName)
+static int validateArgs(const CliArgs *opts, const char *programName)
 {
     if (opts->encryptMode == -1 || !opts->inputPath || !opts->outputPath)
     {

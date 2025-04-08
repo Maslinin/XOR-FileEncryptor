@@ -11,7 +11,7 @@ typedef struct
     ArgHandler handler;
 } ArgOption;
 
-extern ArgOption argOptions[];
+extern const ArgOption argOptions[];
 
 int handleEncrypt(int argc, char *argv[], int *i, CliArgs *opts);
 int handleDecrypt(int argc, char *argv[], int *i, CliArgs *opts);
