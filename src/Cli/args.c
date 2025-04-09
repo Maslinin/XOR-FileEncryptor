@@ -49,14 +49,14 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
         }
     }
 
-    return validateArgs(opts, argv[0]);
+    return validateArgs(opts);
 }
 
-static int validateArgs(const CliArgs *opts, const char *programName)
+int validateArgs(const CliArgs *opts)
 {
     if (opts->encryptMode == -1 || !opts->inputPath || !opts->outputPath)
     {
-        printUsage(programName);
+        fprintf(stderr, "Error: missing required arguments (-e/-d, -i, -o).\n");
         return EXIT_FAILURE;
     }
 
@@ -69,7 +69,7 @@ static int validateArgs(const CliArgs *opts, const char *programName)
         }
         else if (!opts->generateKey && !opts->key)
         {
-            fprintf(stderr, "Error: encryption requires a key (-k) or generation (-g).\n");
+            fprintf(stderr, "Error: encryption requires a key (-k) or key generation (-g).\n");
             return EXIT_FAILURE;
         }
     }
@@ -82,15 +82,9 @@ static int validateArgs(const CliArgs *opts, const char *programName)
         }
         else if (!opts->key)
         {
-            fprintf(stderr, "Error: decryption requires a key.\n");
+            fprintf(stderr, "Error: decryption requires a key (-k).\n");
             return EXIT_FAILURE;
         }
-    }
-
-    if (opts->key && strlen(opts->key) >= KEY_LENGTH)
-    {
-        fprintf(stderr, "Error: provided key is too long (max %d characters).\n", KEY_LENGTH - 1);
-        return EXIT_FAILURE;
     }
 
     return EXIT_SUCCESS;

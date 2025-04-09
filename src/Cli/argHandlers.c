@@ -6,6 +6,8 @@
 static int parseFlag(int argc, char *argv[], int *i, int *target, int value);
 static int parseString(int argc, char *argv[], int *i, const char **target);
 
+static int validateArgLength(const char *key, size_t length);
+
 int handleEncrypt(int argc, char *argv[], int *i, CliArgs *opts)
 {
     if (opts->encryptMode != -1)
@@ -43,7 +45,22 @@ int handleKey(int argc, char *argv[], int *i, CliArgs *opts)
         fprintf(stderr, "Error: duplicate -k flag.\n");
         return -1;
     }
-    return parseString(argc, argv, i, &opts->key);
+
+    const char *arg;
+    if (parseString(argc, argv, i, &arg) != 0)
+    {
+        fprintf(stderr, "Error: -k requires a value.\n");
+        return -1;
+    }
+    if (validateArgLength(arg, KEY_LENGTH) != 0)
+    {
+        fprintf(stderr, "Error: key is too long (max %d characters).\n", KEY_LENGTH - 1);
+        return -1;
+    }
+
+    strncpy(opts->key, arg, KEY_LENGTH);
+
+    return 0;
 }
 
 int handleInput(int argc, char *argv[], int *i, CliArgs *opts)
@@ -53,7 +70,22 @@ int handleInput(int argc, char *argv[], int *i, CliArgs *opts)
         fprintf(stderr, "Error: duplicate -i flag.\n");
         return -1;
     }
-    return parseString(argc, argv, i, &opts->inputPath);
+
+    const char *arg;
+    if (parseString(argc, argv, i, &arg) != 0)
+    {
+        fprintf(stderr, "Error: -i requires a value.\n");
+        return -1;
+    }
+    if (validateArgLength(arg, PATH_LENGTH) != 0)
+    {
+        fprintf(stderr, "Error: the input path is too long (max %d characters).\n", KEY_LENGTH - 1);
+        return -1;
+    }
+    
+    strncpy(opts->inputPath, arg, PATH_LENGTH);
+
+    return 0;
 }
 
 int handleOutput(int argc, char *argv[], int *i, CliArgs *opts)
@@ -63,7 +95,22 @@ int handleOutput(int argc, char *argv[], int *i, CliArgs *opts)
         fprintf(stderr, "Error: duplicate -o flag.\n");
         return -1;
     }
-    return parseString(argc, argv, i, &opts->outputPath);
+
+    const char *arg;
+    if (parseString(argc, argv, i, &arg) != 0)
+    {
+        fprintf(stderr, "Error: -o requires a value.\n");
+        return -1;
+    }
+    if (validateArgLength(arg, PATH_LENGTH) != 0)
+    {
+        fprintf(stderr, "Error: the output path is too long (max %d characters).\n", KEY_LENGTH - 1);
+        return -1;
+    }
+
+    strncpy(opts->outputPath, arg, PATH_LENGTH);
+    
+    return 0;
 }
 
 static int parseFlag(int argc, char *argv[], int *i, int *target, int value)
@@ -73,10 +120,21 @@ static int parseFlag(int argc, char *argv[], int *i, int *target, int value)
     return 0;
 }
 
-static int parseString(int argc, char *argv[], int *i, const char **target)
+static int parseString(int argc, char *argv[], int *i, const char **arg)
 {
     if (*i + 1 >= argc)
+    {
         return -1;
-    *target = argv[++(*i)];
+    }
+    *arg = argv[++(*i)];
+    return 0;
+}
+
+static int validateArgLength(const char *key, size_t length)
+{
+    if (strlen(key) >= length)
+    {
+        return -1;
+    }
     return 0;
 }
