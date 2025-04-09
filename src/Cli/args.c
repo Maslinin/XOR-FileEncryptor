@@ -6,8 +6,8 @@
 #include <string.h>
 #include <stdbool.h>
 
-static void printUsage(const char *programName);
 static int validateArgs(const CliArgs *opts);
+static void printUsage(const char *programName);
 
 const ArgOption argOptions[] = {
     {"-e", handleEncrypt},
@@ -29,16 +29,17 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
         bool matched = false;
         for (const ArgOption *opt = argOptions; opt->flag; ++opt)
         {
-            if (strcmp(argv[i], opt->flag) == 0)
+            if (strcmp(argv[i], opt->flag) != 0)
             {
-                if (opt->handler(argc, argv, &i, opts) != 0)
-                {
-                    printUsage(argv[0]);
-                    return EXIT_FAILURE;
-                }
-                matched = true;
-                break;
+                continue;
             }
+
+            if (opt->handler(argc, argv, &i, opts) != 0)
+            {
+                return EXIT_FAILURE;
+            }
+
+            matched = true;
         }
 
         if (!matched)
@@ -52,7 +53,7 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
     return validateArgs(opts);
 }
 
-int validateArgs(const CliArgs *opts)
+static int validateArgs(const CliArgs *opts)
 {
     if (opts->encryptMode == -1 || !opts->inputPath || !opts->outputPath)
     {

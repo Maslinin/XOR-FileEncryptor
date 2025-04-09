@@ -5,7 +5,6 @@
 
 static int parseFlag(int argc, char *argv[], int *i, int *target, int value);
 static int parseString(int argc, char *argv[], int *i, const char **target);
-
 static int validateArgLength(const char *key, size_t length);
 
 int handleEncrypt(int argc, char *argv[], int *i, CliArgs *opts)
