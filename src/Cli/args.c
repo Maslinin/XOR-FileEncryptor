@@ -7,7 +7,7 @@
 #include <stdbool.h>
 
 static void printUsage(const char *programName);
-static int validateArgs(const CliArgs *opts, const char *programName);
+static int validateArgs(const CliArgs *opts);
 
 const ArgOption argOptions[] = {
     {"-e", handleEncrypt},
