@@ -45,6 +45,7 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
         {
             fprintf(stderr, "Unknown option: %s\n", argv[i]);
             printUsage(argv[0]);
+            
             return EXIT_FAILURE;
         }
     }

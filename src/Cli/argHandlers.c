@@ -39,6 +39,8 @@ int handleOutput(int argc, char *argv[], int *i, CliArgs *opts)
 
 static int handleFlag(int argc, char *argv[], int *i, int *target, int expectedValue, int disallowedValue)
 {
+    (void)argc;
+    
     const char *flagName = argv[*i];
 
     if (*target != disallowedValue)
