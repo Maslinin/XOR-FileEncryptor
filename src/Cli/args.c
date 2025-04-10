@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 static int validateArgs(const CliArgs *opts);
 static void printUsage(const char *programName);
@@ -26,20 +25,20 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
 
     for (int i = 1; i < argc; ++i)
     {
-        bool matched = false;
+        int matched = 0;
         for (const ArgOption *opt = argOptions; opt->flag; ++opt)
         {
-            if (strcmp(argv[i], opt->flag) != 0)
+            if (strcmp(argv[i], opt->flag))
             {
                 continue;
             }
 
-            if (opt->handler(argc, argv, &i, opts) != 0)
+            if (opt->handler(argc, argv, &i, opts))
             {
                 return EXIT_FAILURE;
             }
 
-            matched = true;
+            matched = 1;
         }
 
         if (!matched)
@@ -63,7 +62,7 @@ static int validateArgs(const CliArgs *opts)
 
     if (opts->encryptMode)
     {
-        if (opts->generateKey && opts->key)
+        if (opts->generateKey && opts->key[0])
         {
             fprintf(stderr, "Error: use either -k or -g, not both.\n");
             return EXIT_FAILURE;

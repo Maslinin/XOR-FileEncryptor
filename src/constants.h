@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define KEY_LENGTH (BUFSIZ - 1)
+#define KEY_LENGTH BUFSIZ
 
 #ifdef PATH_MAX
 #define PATH_LENGTH PATH_MAX

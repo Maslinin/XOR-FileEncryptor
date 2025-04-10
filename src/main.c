@@ -15,26 +15,19 @@ int main(int argc, char *argv[])
 
     if (opts.encryptMode == 1)
     {
-        char key[KEY_LENGTH];
-
         if (opts.generateKey)
         {
-            generateKey(key, KEY_LENGTH);
-        }
-        else
-        {
-            strncpy(key, opts.key, KEY_LENGTH);
-            key[KEY_LENGTH - 1] = '\0';
+            generateKey(opts.key, KEY_LENGTH);
         }
 
         printf("Encrypting file...\n");
-        if (encryptFile(opts.inputPath, opts.outputPath, key) == EXIT_SUCCESS)
+        if (encryptFile(opts.inputPath, opts.outputPath, opts.key) == EXIT_SUCCESS)
         {
-            printf("The file was successfully encrypted. Your key:\n%s\n", key);
+            printf("The file was successfully encrypted. Your key:\n%s\n", opts.key);
         }
         else
         {
-            perror("Encryption failed. Please, try again");
+            perror("Encryption failed. Please, try again.");
             return EXIT_FAILURE;
         }
     }
@@ -47,7 +40,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            perror("Decryption failed. Please, try again");
+            perror("Decryption failed. Please, try again.");
             return EXIT_FAILURE;
         }
     }

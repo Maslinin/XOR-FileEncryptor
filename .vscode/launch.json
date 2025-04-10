@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/bin/FileEncryptor.exe",
-            "args": [],
+            "args": ["-e", "-i", "${workspaceFolder}/build/bin/enc.exe", "-o", "${workspaceFolder}/build/bin/dec.exe"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

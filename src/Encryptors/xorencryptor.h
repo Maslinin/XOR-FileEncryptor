@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-char *generateKey(char *buffer, size_t size);
+void generateKey(char *buffer, size_t size);
 
 int encryptFile(const char *srcFilePath, const char *destFilePath, const char *key);
 int decryptFile(const char *srcFilePath, const char *destFilePath, const char *key);

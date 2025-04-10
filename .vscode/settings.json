@@ -9,6 +9,7 @@
         "args.h": "c",
         "argHandlers": "c",
         "stddef.h": "c",
-        "limits.h": "c"
+        "limits.h": "c",
+        "stdbool.h": "c"
     }
 }
