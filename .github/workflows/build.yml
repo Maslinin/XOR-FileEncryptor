@@ -5,9 +5,10 @@ on:
       - master
   pull_request:
     types: [opened, synchronize, reopened]
+    
 jobs:
   build:
-    name: Build and analyze
+    name: Build (Windows) | Analyze
     runs-on: windows-latest
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
@@ -31,5 +32,22 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FileEncryptor
+          name: FileEncryptor-Win-x86-64
+          path: build/bin
+
+  build-linux:
+    name: Build (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake
+      - name: Configure and Build
+        run: |
+          cmake -B build -S .
+          cmake --build build --config Release
+      - name: Upload Artifact (Linux)
+        uses: actions/upload-artifact@v4
+        with:
+          name: FileEncryptor-Linux-x86-64 #By default, ubuntu-latest builds for the x86-64 architecture.
           path: build/bin
