@@ -12,6 +12,7 @@ set(HEADERS
 	src/Encryptors/xorencryptor.h
 	src/Cli/args.h
 	src/Cli/argHandlers.h
+	src/Cli/argFlags.h
 )
 
 set(SOURCES

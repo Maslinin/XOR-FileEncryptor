@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            perror("Encryption failed. Please, try again.");
+            perror("Encryption failed");
             return EXIT_FAILURE;
         }
     }
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            perror("Decryption failed. Please, try again.");
+            perror("Decryption failed");
             return EXIT_FAILURE;
         }
     }

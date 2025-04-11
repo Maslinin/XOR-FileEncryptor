@@ -1,4 +1,5 @@
 #include "args.h"
+#include "argFlags.h"
 #include "argHandlers.h"
 #include "../constants.h"
 #include <stdio.h>
@@ -8,18 +9,30 @@
 static int validateArgs(const CliArgs *opts);
 static void printUsage(const char *programName);
 
-const ArgOption argOptions[] = {
-    {"-e", handleEncrypt},
-    {"-d", handleDecrypt},
-    {"-g", handleGenerateKey},
-    {"-k", handleKey},
-    {"-i", handleInput},
-    {"-o", handleOutput},
+typedef struct
+{
+    const char *flag;
+    ArgHandler handler;
+} ArgOption;
+
+static const ArgOption argOptions[] = {
+    {FLAG_ENCRYPT, handleEncrypt},
+    {FLAG_DECRYPT, handleDecrypt},
+    {FLAG_GENERATE_KEY, handleGenerateKey},
+    {FLAG_KEY, handleKey},
+    {FLAG_INPUT, handleInput},
+    {FLAG_OUTPUT, handleOutput},
     {NULL, NULL}
 };
 
 int parseArgs(int argc, char *argv[], CliArgs *opts)
 {
+    if (argc < 2)
+    {
+        printUsage(argv[0]);
+        return EXIT_FAILURE;
+    }
+
     memset(opts, 0, sizeof(CliArgs));
     opts->encryptMode = -1;
 
@@ -55,9 +68,15 @@ int parseArgs(int argc, char *argv[], CliArgs *opts)
 
 static int validateArgs(const CliArgs *opts)
 {
-    if (opts->encryptMode == -1 || !opts->inputPath || !opts->outputPath)
+    if (opts->encryptMode == -1 || !opts->inputPath[0] || !opts->outputPath[0])
     {
         fprintf(stderr, "Error: missing required arguments (-e/-d, -i, -o).\n");
+        return EXIT_FAILURE;
+    }
+
+    if (strcmp(opts->inputPath, opts->outputPath) == 0)
+    {
+        fprintf(stderr, "Error: source path cannot be the same as destination path.\n");
         return EXIT_FAILURE;
     }
 
@@ -68,7 +87,7 @@ static int validateArgs(const CliArgs *opts)
             fprintf(stderr, "Error: use either -k or -g, not both.\n");
             return EXIT_FAILURE;
         }
-        else if (!opts->generateKey && !opts->key)
+        else if (!opts->generateKey && !opts->key[0])
         {
             fprintf(stderr, "Error: encryption requires a key (-k) or key generation (-g).\n");
             return EXIT_FAILURE;
@@ -79,11 +98,6 @@ static int validateArgs(const CliArgs *opts)
         if (opts->generateKey)
         {
             fprintf(stderr, "Error: -g cannot be used in decryption mode.\n");
-            return EXIT_FAILURE;
-        }
-        else if (!opts->key)
-        {
-            fprintf(stderr, "Error: decryption requires a key (-k).\n");
             return EXIT_FAILURE;
         }
     }

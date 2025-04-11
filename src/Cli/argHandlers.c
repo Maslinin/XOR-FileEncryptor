@@ -1,3 +1,4 @@
+#include "argFlags.h"
 #include "argHandlers.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +7,8 @@
 static int handleFlag(int argc, char *argv[], int *i, int *target, int expectedValue, int disallowedValue);
 static int handleString(int argc, char *argv[], int *i, char *target, size_t maxLength);
 static int parseString(int argc, char *argv[], int *i, const char **target);
+static int isKnownFlag(const char *arg);
+
 
 int handleEncrypt(int argc, char *argv[], int *i, CliArgs *opts)
 {
@@ -64,7 +67,7 @@ static int handleString(int argc, char *argv[], int *i, char *target, size_t max
     }
 
     const char *arg;
-    if (parseString(argc, argv, i, &arg) != 0)
+    if (parseString(argc, argv, i, &arg) != 0 || isKnownFlag(arg))
     {
         fprintf(stderr, "Error: %s requires a value.\n", flagName);
         return -1;
@@ -84,11 +87,34 @@ static int handleString(int argc, char *argv[], int *i, char *target, size_t max
 
 static int parseString(int argc, char *argv[], int *i, const char **arg)
 {
-    if (++(*i) >= argc)
+    if (++(*i) >= argc || argv[*i][0] == '\0')
     {
         return -1;
     }
 
     *arg = argv[*i];
+    return 0;
+}
+
+static const char *knownFlags[] = {
+    FLAG_ENCRYPT,
+    FLAG_DECRYPT,
+    FLAG_GENERATE_KEY,
+    FLAG_KEY,
+    FLAG_INPUT,
+    FLAG_OUTPUT,
+    NULL
+};
+
+static int isKnownFlag(const char *arg)
+{
+    for (int i = 0; knownFlags[i] != NULL; ++i)
+    {
+        if (strcmp(arg, knownFlags[i]) == 0)
+        {
+            return 1;
+        }
+    }
+
     return 0;
 }
